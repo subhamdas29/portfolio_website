@@ -45,3 +45,6 @@ desktop.ini
 .vite
 .cache
 .eslintcache
+reference/*
+resources/*
+important/*
