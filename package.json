@@ -12,7 +12,9 @@
     "start": "concurrently \"npm run dev\" \"npm run server\""
   },
   "dependencies": {
+    "dotenv": "^17.4.2",
     "lucide-react": "^0.344.0",
+    "mongoose": "^9.9.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

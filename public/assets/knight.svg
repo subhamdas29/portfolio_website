@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="currentColor">
+  <!-- Base Pedestal -->
+  <path d="M22 88 C35 84 65 84 78 88 C78 82 72 78 64 78 L36 78 C28 78 22 82 22 88 Z" />
+  <path d="M26 76 C32 68 68 68 74 76 L66 67 L34 67 Z" />
+  <!-- Knight Body & Horse Head facing left with detailed mane and snout -->
+  <path d="M34 67 C35 55 32 46 25 43 C22 41 22 36 27 34 C33 32 36 28 36 22 C36 19 40 17 42 20 C45 25 48 21 51 18 C54 24 59 21 62 26 C67 34 67 46 66 67 Z" />
+  <!-- Eye detail -->
+  <path d="M32 31 Q35 30 37 32" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" />
+</svg>
