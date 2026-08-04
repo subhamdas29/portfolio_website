@@ -1,0 +1,23 @@
+[
+  {
+    "id": "sample-1",
+    "name": "Subham Das",
+    "occupation": "Student",
+    "organization": "IIT Kharagpur",
+    "createdAt": "2026-08-01T10:00:00.000Z"
+  },
+  {
+    "id": "sample-2",
+    "name": "Alex Rivera",
+    "occupation": "Senior Developer",
+    "organization": "Stripe",
+    "createdAt": "2026-08-01T11:30:00.000Z"
+  },
+  {
+    "id": "sample-3",
+    "name": "Priya Sharma",
+    "occupation": "AI Researcher",
+    "organization": "Google DeepMind",
+    "createdAt": "2026-08-02T09:15:00.000Z"
+  }
+]
