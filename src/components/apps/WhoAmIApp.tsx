@@ -1,408 +1,372 @@
 import React, { useState } from 'react';
 import { resumeData } from '../../data/resumeData';
 import { projectsData } from '../../data/projectsData';
-import { 
-  GraduationCap, 
-  Code, 
-  Briefcase, 
-  Trophy, 
-  Mail, 
-  Github, 
-  Linkedin, 
-  Sparkles,
-  ExternalLink,
-  Bot,
-  BrainCircuit,
-  Award,
-  ArrowRight,
-  Layers,
-  CheckCircle2,
-  User,
-  Zap
-} from 'lucide-react';
+import { Maximize2, Github, Linkedin, Mail, Send, ChevronLeft, ChevronRight, ExternalLink, Sparkles, CheckCircle2 } from 'lucide-react';
 
 interface WhoAmIAppProps {
   onOpenApp?: (appId: string, extraProps?: Record<string, any>) => void;
 }
 
 export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp }) => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'work' | 'skills' | 'timeline'>('overview');
+  const [currentFeaturedIdx, setCurrentFeaturedIdx] = useState(0);
+  const [contactSubmitted, setContactSubmitted] = useState(false);
+  const [contactForm, setContactForm] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    subject: '',
+    message: '',
+  });
+
+  const nextFeatured = () => {
+    setCurrentFeaturedIdx((prev) => (prev + 1) % projectsData.length);
+  };
+
+  const prevFeatured = () => {
+    setCurrentFeaturedIdx((prev) => (prev - 1 + projectsData.length) % projectsData.length);
+  };
+
+  const handleContactSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!contactForm.email || !contactForm.message) return;
+    setContactSubmitted(true);
+    setTimeout(() => {
+      setContactSubmitted(false);
+      setContactForm({ firstName: '', lastName: '', email: '', subject: '', message: '' });
+    }, 4000);
+  };
+
+  const featuredProject = projectsData[currentFeaturedIdx];
 
   return (
-    <div className="h-full overflow-y-auto custom-scrollbar bg-[#141414] text-stone-100 font-sans p-6 sm:p-10 space-y-8 select-text">
-      {/* Modern Minimal Hero Header (Ally Doederlein Showcase Theme) */}
-      <div className="relative rounded-3xl bg-gradient-to-br from-[#1E1E1E] via-[#1A1A1A] to-[#121212] border border-stone-800 p-6 sm:p-10 shadow-2xl overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-        
-        <div className="relative z-10 flex flex-col md:flex-row items-center md:items-start gap-8">
-          {/* Profile Picture */}
-          <div className="relative shrink-0 group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500 via-cyan-500 to-amber-400 rounded-3xl blur opacity-30 group-hover:opacity-70 transition duration-500" />
-            <div className="relative w-36 h-36 sm:w-44 sm:h-44 rounded-3xl overflow-hidden border-2 border-stone-700 shadow-2xl bg-black">
+    <div className="h-full overflow-y-auto custom-scrollbar bg-[#E5D8F0] text-stone-950 font-serif select-text relative">
+      {/* Full-Screen Experience Tip Notification Banner */}
+      <div className="bg-[#18181B] text-white px-4 py-2.5 flex items-center justify-between text-xs font-sans border-b border-white/10 sticky top-0 z-30 shadow-md">
+        <div className="flex items-center space-x-2">
+          <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
+          <span className="font-medium">
+            <strong className="text-amber-300">Best View Tip:</strong> Click the green 🟢 button or maximize window for the full-screen website experience!
+          </span>
+        </div>
+        <div className="flex items-center space-x-1 text-[11px] font-mono text-stone-400">
+          <Maximize2 className="w-3 h-3" />
+          <span>Full Screen</span>
+        </div>
+      </div>
+
+      {/* 1. HERO SECTION (Dark Dramatic Stage Backdrop Theme) */}
+      <div className="relative min-h-[500px] sm:min-h-[580px] bg-stone-950 text-white flex flex-col items-center justify-center text-center p-8 sm:p-16 border-b-4 border-stone-950 overflow-hidden">
+        {/* Background Overlay Art */}
+        <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/70 to-stone-950/40 z-10" />
+        <img
+          src="/assets/Wallpapers/interstellar.jpg"
+          alt="Stage Backdrop"
+          className="absolute inset-0 w-full h-full object-cover opacity-40 blur-xs scale-105"
+        />
+
+        <div className="relative z-20 max-w-4xl space-y-6">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-serif tracking-widest text-white uppercase font-normal leading-tight">
+            SUBHAM DAS
+          </h1>
+          <p className="text-lg sm:text-2xl font-serif italic text-stone-300 tracking-wider">
+            Full-Stack Engineer &amp; Systems Architect
+          </p>
+
+          <div className="pt-4 flex flex-wrap justify-center gap-4 text-xs font-sans">
+            <span className="px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-white backdrop-blur-md">
+              Kolkata, India / Remote
+            </span>
+            <span className="px-4 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 font-bold backdrop-blur-md">
+              ● Available for Roles
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* 2. FEATURED WORK CAROUSEL SECTION */}
+      <div className="py-16 px-6 sm:px-12 max-w-6xl mx-auto space-y-8 text-center">
+        <h2 className="text-3xl sm:text-4xl font-serif font-bold tracking-widest uppercase text-stone-900">
+          FEATURED WORK
+        </h2>
+
+        {/* Carousel Container */}
+        <div className="relative rounded-2xl overflow-hidden bg-stone-900 text-white shadow-2xl border border-stone-800">
+          <div className="relative aspect-video max-h-[460px] w-full overflow-hidden bg-black flex items-center justify-center">
+            {/* Project Image & Details */}
+            <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-transparent to-black/30 z-10" />
+            <img
+              src={
+                featuredProject.id === 'payflow'
+                  ? '/assets/Wallpapers/5957646.png'
+                  : featuredProject.id === 'resumepilot'
+                  ? '/assets/Wallpapers/tanjiro-kamado-6082x5416-23027.jpg'
+                  : '/assets/Wallpapers/lunar.jpg'
+              }
+              alt={featuredProject.title}
+              className="w-full h-full object-cover object-center transform transition duration-700 hover:scale-105 opacity-80"
+            />
+
+            {/* Navigation Left Arrow */}
+            <button
+              onClick={prevFeatured}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition-all cursor-pointer border border-white/20 shadow-lg"
+              title="Previous Project"
+            >
+              <ChevronLeft size={28} />
+            </button>
+
+            {/* Navigation Right Arrow */}
+            <button
+              onClick={nextFeatured}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition-all cursor-pointer border border-white/20 shadow-lg"
+              title="Next Project"
+            >
+              <ChevronRight size={28} />
+            </button>
+
+            {/* Project Overlay Info */}
+            <div className="absolute bottom-6 left-6 right-6 z-20 text-left space-y-2">
+              <div className="inline-block px-3 py-1 rounded bg-amber-400 text-black text-xs font-sans font-bold uppercase tracking-wider">
+                {featuredProject.type}
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-serif font-bold text-white">
+                {featuredProject.title}
+              </h3>
+              <p className="text-xs sm:text-sm font-sans text-stone-300 max-w-2xl line-clamp-2">
+                {featuredProject.description}
+              </p>
+              {onOpenApp && (
+                <button
+                  onClick={() => onOpenApp('project', { projectId: featuredProject.id })}
+                  className="mt-2 px-4 py-2 bg-white hover:bg-stone-200 text-black text-xs font-sans font-bold uppercase tracking-wider transition-all cursor-pointer inline-flex items-center space-x-1.5"
+                >
+                  <span>Inspect Project Specs</span>
+                  <ExternalLink size={12} />
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 3. MORE WORK SECTION (4 Square Project Cards Grid) */}
+      <div className="py-16 px-6 sm:px-12 max-w-6xl mx-auto space-y-10 text-center border-t border-stone-300">
+        <h2 className="text-3xl sm:text-4xl font-serif font-bold tracking-widest uppercase text-stone-900">
+          MORE WORK
+        </h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {projectsData.map((proj) => (
+            <div
+              key={proj.id}
+              onClick={() => onOpenApp && onOpenApp('project', { projectId: proj.id })}
+              className="group relative aspect-square bg-stone-900 rounded-lg overflow-hidden shadow-xl border border-stone-800 cursor-pointer transition-transform duration-500 hover:-translate-y-1.5"
+            >
+              <img
+                src={
+                  proj.id === 'payflow'
+                    ? '/assets/Wallpapers/5957646.png'
+                    : proj.id === 'resumepilot'
+                    ? '/assets/Wallpapers/tanjiro-kamado-6082x5416-23027.jpg'
+                    : proj.id === 'codearena'
+                    ? '/assets/Wallpapers/660523.jpg'
+                    : '/assets/Wallpapers/dandelion.jpg'
+                }
+                alt={proj.title}
+                className="w-full h-full object-cover opacity-60 group-hover:opacity-40 group-hover:scale-110 transition duration-700"
+              />
+              <div className="absolute inset-0 bg-black/50 group-hover:bg-black/70 transition duration-300 flex flex-col items-center justify-center p-6 text-center text-white space-y-2">
+                <h3 className="text-lg font-serif font-bold tracking-widest uppercase">
+                  {proj.title}
+                </h3>
+                <p className="text-[11px] font-sans text-stone-300 uppercase tracking-wider">
+                  {proj.type}
+                </p>
+                <div className="pt-2 opacity-0 group-hover:opacity-100 transition duration-300 text-xs font-sans text-amber-300 underline flex items-center space-x-1">
+                  <span>View Details</span>
+                  <ExternalLink size={12} />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 4. ABOUT SUBHAM! SECTION */}
+      <div className="py-16 px-6 sm:px-12 max-w-6xl mx-auto border-t border-stone-300">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          {/* Black & White Portrait Image */}
+          <div className="flex justify-center">
+            <div className="w-72 h-80 sm:w-80 sm:h-96 rounded-xl overflow-hidden shadow-2xl border-4 border-stone-900 bg-black">
               <img
                 src="/assets/personalpic.jpeg"
                 alt="Subham Das"
-                className="w-full h-full object-cover object-center block transform transition duration-700 group-hover:scale-105"
+                className="w-full h-full object-cover object-center grayscale contrast-125 hover:grayscale-0 transition duration-700"
               />
-            </div>
-            <div className="absolute bottom-3 right-3 bg-black/90 backdrop-blur-md border border-emerald-500/60 text-emerald-400 text-[10px] font-bold font-mono px-3 py-1 rounded-full shadow-lg flex items-center space-x-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Available for Hire</span>
             </div>
           </div>
 
-          {/* Bio & Intro Details */}
-          <div className="space-y-4 text-center md:text-left flex-1">
-            <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-xs font-mono text-emerald-400">
-              <Sparkles size={14} className="text-amber-400" />
-              <span>Full-Stack Engineer & Creative Developer</span>
-            </div>
+          {/* Bio Text & Resume Button */}
+          <div className="space-y-6 text-stone-900">
+            <h2 className="text-3xl sm:text-4xl font-serif font-bold tracking-wider uppercase">
+              ABOUT SUBHAM!
+            </h2>
 
-            <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight uppercase">
-              Subham Das
-            </h1>
-
-            <p className="text-sm text-stone-300 leading-relaxed max-w-2xl font-normal">
-              {resumeData.summary}
+            <p className="text-sm sm:text-base font-serif leading-relaxed text-stone-800">
+              I am a Computer Science Engineer graduating from <strong>Techno Main Salt Lake</strong> with a B.Tech in CSE (<strong>8.87 CGPA</strong>).
+              I specialize in building production-grade full-stack web applications, real-time banking architectures, and high-performance AI engines.
             </p>
 
-            {/* Quick Action Links */}
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 pt-3">
+            <p className="text-sm sm:text-base font-serif leading-relaxed text-stone-800">
+              This combination of strong backend system design and modern frontend aesthetics enables me to architect software that scales reliably under heavy traffic while delivering clean, intuitive user experiences.
+            </p>
+
+            <div className="pt-2 flex items-center space-x-4">
               <a
                 href={resumeData.github}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center space-x-2 px-4 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 border border-stone-700 text-xs font-semibold text-white transition-all shadow-sm"
+                className="px-6 py-3 bg-stone-950 hover:bg-stone-800 text-white text-xs font-sans font-bold uppercase tracking-widest transition-all shadow-md inline-block cursor-pointer"
               >
-                <Github size={15} />
-                <span>GitHub</span>
-                <ExternalLink size={11} className="opacity-60" />
+                See Resume
               </a>
+              {onOpenApp && (
+                <button
+                  onClick={() => onOpenApp('terminal', { initialCommand: 'cat resume' })}
+                  className="px-6 py-3 bg-white border-2 border-stone-950 hover:bg-stone-100 text-stone-950 text-xs font-sans font-bold uppercase tracking-widest transition-all shadow-md inline-block cursor-pointer"
+                >
+                  View Terminal Resume
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
 
+      {/* 5. GET IN TOUCH! SECTION (Ally Doederlein Style Contact Box) */}
+      <div className="py-16 px-6 sm:px-12 max-w-5xl mx-auto border-t border-stone-300 space-y-12">
+        {/* Giant Black Outlined Header Box */}
+        <div className="border-4 border-stone-950 bg-[#E5D8F0] p-6 sm:p-8 text-center shadow-lg">
+          <h2 className="text-3xl sm:text-5xl font-serif font-bold tracking-widest uppercase text-stone-950">
+            GET IN TOUCH!
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          {/* Left Column: Contact Details & Social Icons */}
+          <div className="space-y-4 text-stone-950">
+            <h3 className="text-xl font-serif font-bold tracking-widest uppercase">
+              CONTACT
+            </h3>
+            <p className="text-xs sm:text-sm font-sans text-stone-800 font-medium">
+              {resumeData.email}
+            </p>
+            <div className="flex items-center space-x-3 pt-2">
               <a
                 href={resumeData.linkedin}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center space-x-2 px-4 py-2 rounded-xl bg-sky-950/80 hover:bg-sky-900 border border-sky-600/40 text-xs font-semibold text-sky-300 transition-all shadow-sm"
+                className="w-9 h-9 rounded-full bg-stone-950 text-white flex items-center justify-center hover:bg-stone-800 transition-all shadow-md"
+                title="LinkedIn"
               >
-                <Linkedin size={15} />
-                <span>LinkedIn</span>
-                <ExternalLink size={11} className="opacity-60" />
+                <Linkedin size={16} />
               </a>
-
+              <a
+                href={resumeData.github}
+                target="_blank"
+                rel="noreferrer"
+                className="w-9 h-9 rounded-full bg-stone-950 text-white flex items-center justify-center hover:bg-stone-800 transition-all shadow-md"
+                title="GitHub"
+              >
+                <Github size={16} />
+              </a>
               <a
                 href={`mailto:${resumeData.email}`}
-                className="flex items-center space-x-2 px-4 py-2 rounded-xl bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-600/40 text-xs font-semibold text-emerald-300 transition-all shadow-sm"
+                className="w-9 h-9 rounded-full bg-stone-950 text-white flex items-center justify-center hover:bg-stone-800 transition-all shadow-md"
+                title="Email Me"
               >
-                <Mail size={15} />
-                <span>{resumeData.email}</span>
+                <Mail size={16} />
               </a>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Navigation Tab Bar */}
-      <div className="flex items-center space-x-2 border-b border-stone-800 pb-3 overflow-x-auto scrollbar-none">
-        <button
-          onClick={() => setActiveTab('overview')}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all whitespace-nowrap cursor-pointer ${
-            activeTab === 'overview'
-              ? 'bg-emerald-500 text-black shadow-md'
-              : 'bg-stone-900/60 text-stone-400 hover:text-white hover:bg-stone-800 border border-stone-800'
-          }`}
-        >
-          <User size={14} />
-          <span>Biography & Overview</span>
-        </button>
-
-        <button
-          onClick={() => setActiveTab('work')}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all whitespace-nowrap cursor-pointer ${
-            activeTab === 'work'
-              ? 'bg-emerald-500 text-black shadow-md'
-              : 'bg-stone-900/60 text-stone-400 hover:text-white hover:bg-stone-800 border border-stone-800'
-          }`}
-        >
-          <Layers size={14} />
-          <span>Selected Projects ({projectsData.length})</span>
-        </button>
-
-        <button
-          onClick={() => setActiveTab('skills')}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all whitespace-nowrap cursor-pointer ${
-            activeTab === 'skills'
-              ? 'bg-emerald-500 text-black shadow-md'
-              : 'bg-stone-900/60 text-stone-400 hover:text-white hover:bg-stone-800 border border-stone-800'
-          }`}
-        >
-          <Code size={14} />
-          <span>Technical Skills</span>
-        </button>
-
-        <button
-          onClick={() => setActiveTab('timeline')}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all whitespace-nowrap cursor-pointer ${
-            activeTab === 'timeline'
-              ? 'bg-emerald-500 text-black shadow-md'
-              : 'bg-stone-900/60 text-stone-400 hover:text-white hover:bg-stone-800 border border-stone-800'
-          }`}
-        >
-          <GraduationCap size={14} />
-          <span>Education & Experience</span>
-        </button>
-      </div>
-
-      {/* TAB CONTENT: Overview */}
-      {activeTab === 'overview' && (
-        <div className="space-y-8 animate-fadeIn">
-          {/* Key Metrics / Highlights Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="p-5 rounded-2xl bg-stone-900/90 border border-stone-800 space-y-1">
-              <div className="text-xs font-mono text-emerald-400 font-bold">DEGREE & EDUCATION</div>
-              <div className="text-lg font-bold text-white">B.Tech in CSE</div>
-              <div className="text-xs text-stone-400 font-mono">Techno Main Salt Lake (8.87 CGPA)</div>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-stone-900/90 border border-stone-800 space-y-1">
-              <div className="text-xs font-mono text-cyan-400 font-bold">PRODUCTION PROJECTS</div>
-              <div className="text-lg font-bold text-white">4+ Full-Stack Apps</div>
-              <div className="text-xs text-stone-400 font-mono">PayFlow, ResumePilot, CodeArena</div>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-stone-900/90 border border-stone-800 space-y-1">
-              <div className="text-xs font-mono text-amber-400 font-bold">ACHIEVEMENTS</div>
-              <div className="text-lg font-bold text-white">Top 10 Hackathon</div>
-              <div className="text-xs text-stone-400 font-mono">Internal Smart India Hackathon</div>
-            </div>
-          </div>
-
-          {/* Featured FYP Experience Card */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-stone-900/90 border border-stone-800 space-y-4">
-            <div className="flex items-center justify-between border-b border-stone-800 pb-4 flex-wrap gap-2">
-              <div className="flex items-center space-x-3 text-emerald-400">
-                <Briefcase size={22} />
-                <h2 className="font-bold text-xl text-white">Lead Backend Developer — ResumePilot (FYP)</h2>
+          {/* Right 2 Columns: Contact Form */}
+          <div className="md:col-span-2">
+            {contactSubmitted ? (
+              <div className="p-8 bg-emerald-100 border-2 border-emerald-600 rounded-xl text-center space-y-2 text-emerald-950 font-sans">
+                <CheckCircle2 size={32} className="mx-auto text-emerald-600" />
+                <h4 className="font-bold text-base">Message Sent Successfully!</h4>
+                <p className="text-xs text-emerald-800">Thank you for reaching out. Subham will get back to you shortly.</p>
               </div>
-              <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/30">
-                2024 - Present
-              </span>
-            </div>
-
-            <div className="space-y-3">
-              {resumeData.experience[0].bullets.map((bullet, idx) => (
-                <div key={idx} className="flex items-start space-x-3 text-xs text-stone-300 leading-relaxed">
-                  <CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" />
-                  <span>{bullet}</span>
+            ) : (
+              <form onSubmit={handleContactSubmit} className="space-y-4 font-sans text-xs">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="font-bold text-stone-900">First Name *</label>
+                    <input
+                      type="text"
+                      required
+                      value={contactForm.firstName}
+                      onChange={(e) => setContactForm({ ...contactForm, firstName: e.target.value })}
+                      className="w-full bg-white border border-stone-950 p-2.5 text-stone-950 focus:outline-none focus:ring-2 focus:ring-stone-950"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-stone-900">Last Name *</label>
+                    <input
+                      type="text"
+                      required
+                      value={contactForm.lastName}
+                      onChange={(e) => setContactForm({ ...contactForm, lastName: e.target.value })}
+                      className="w-full bg-white border border-stone-950 p-2.5 text-stone-950 focus:outline-none focus:ring-2 focus:ring-stone-950"
+                    />
+                  </div>
                 </div>
-              ))}
-            </div>
 
-            {onOpenApp && (
-              <div className="pt-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="font-bold text-stone-900">Email *</label>
+                    <input
+                      type="email"
+                      required
+                      value={contactForm.email}
+                      onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
+                      className="w-full bg-white border border-stone-950 p-2.5 text-stone-950 focus:outline-none focus:ring-2 focus:ring-stone-950"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-stone-900">Subject</label>
+                    <input
+                      type="text"
+                      value={contactForm.subject}
+                      onChange={(e) => setContactForm({ ...contactForm, subject: e.target.value })}
+                      className="w-full bg-white border border-stone-950 p-2.5 text-stone-950 focus:outline-none focus:ring-2 focus:ring-stone-950"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="font-bold text-stone-900">Message</label>
+                  <textarea
+                    rows={4}
+                    required
+                    value={contactForm.message}
+                    onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
+                    className="w-full bg-white border border-stone-950 p-2.5 text-stone-950 focus:outline-none focus:ring-2 focus:ring-stone-950 resize-none"
+                  />
+                </div>
+
                 <button
-                  onClick={() => onOpenApp('project', { projectId: 'resumepilot' })}
-                  className="inline-flex items-center space-x-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold font-mono transition-all shadow-md cursor-pointer"
+                  type="submit"
+                  className="px-8 py-3 bg-stone-950 hover:bg-stone-800 text-white font-serif text-xs font-bold uppercase tracking-widest transition-all cursor-pointer shadow-md"
                 >
-                  <BrainCircuit size={15} />
-                  <span>Inspect ResumePilot Deep Tech Specs -&gt;</span>
+                  Submit
                 </button>
-              </div>
+              </form>
             )}
           </div>
         </div>
-      )}
-
-      {/* TAB CONTENT: Selected Projects */}
-      {activeTab === 'work' && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fadeIn">
-          {projectsData.map((project) => (
-            <div
-              key={project.id}
-              className="group rounded-3xl bg-stone-900/90 border border-stone-800 p-6 flex flex-col justify-between space-y-4 hover:border-emerald-500/50 transition-all shadow-lg hover:shadow-2xl"
-            >
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="px-3 py-1 rounded-full text-[11px] font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                    {project.type}
-                  </span>
-                  <div className="flex items-center space-x-2">
-                    {project.githubUrl && (
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="p-1.5 rounded-lg text-stone-400 hover:text-white hover:bg-stone-800 transition-all"
-                        title="Source Code"
-                      >
-                        <Github size={16} />
-                      </a>
-                    )}
-                    {project.liveUrl && (
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="p-1.5 rounded-lg text-emerald-400 hover:bg-emerald-500/10 transition-all"
-                        title="Live Demo"
-                      >
-                        <Zap size={16} />
-                      </a>
-                    )}
-                  </div>
-                </div>
-
-                <h3 className="text-xl font-extrabold text-white group-hover:text-emerald-400 transition-colors">
-                  {project.title}
-                </h3>
-                <p className="text-xs text-stone-300 font-mono">{project.subtitle}</p>
-                <p className="text-xs text-stone-400 leading-relaxed line-clamp-3">
-                  {project.description}
-                </p>
-
-                <div className="flex flex-wrap gap-1.5 pt-2">
-                  {project.techStack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2.5 py-0.5 rounded bg-black/40 text-[10px] font-mono text-stone-300 border border-stone-800"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {onOpenApp && (
-                <button
-                  onClick={() => onOpenApp('project', { projectId: project.id })}
-                  className="w-full py-2.5 rounded-xl bg-stone-800 hover:bg-emerald-600 hover:text-white text-stone-300 text-xs font-mono font-bold transition-all flex items-center justify-center space-x-2 cursor-pointer"
-                >
-                  <span>View Full Details</span>
-                  <ArrowRight size={14} />
-                </button>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* TAB CONTENT: Technical Skills */}
-      {activeTab === 'skills' && (
-        <div className="p-6 sm:p-8 rounded-3xl bg-stone-900/90 border border-stone-800 space-y-6 animate-fadeIn">
-          <div className="flex items-center space-x-3 text-cyan-400 border-b border-stone-800 pb-4">
-            <Code size={22} />
-            <h2 className="font-bold text-xl text-white">Technical Skills & Frameworks</h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            <div className="p-5 rounded-2xl bg-black/40 border border-stone-800 space-y-3">
-              <div className="text-xs font-mono font-bold text-amber-400">LANGUAGES</div>
-              <div className="flex flex-wrap gap-2">
-                {resumeData.skills.languages.map((skill) => (
-                  <span key={skill} className="px-3 py-1 rounded-lg bg-stone-800 text-xs font-mono text-stone-200 border border-stone-700">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-black/40 border border-stone-800 space-y-3">
-              <div className="text-xs font-mono font-bold text-cyan-400">FRONTEND DEVELOPMENT</div>
-              <div className="flex flex-wrap gap-2">
-                {resumeData.skills.frontend.map((skill) => (
-                  <span key={skill} className="px-3 py-1 rounded-lg bg-cyan-950/80 text-xs font-mono text-cyan-300 border border-cyan-800/60">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-black/40 border border-stone-800 space-y-3">
-              <div className="text-xs font-mono font-bold text-emerald-400">BACKEND & DEVOPS</div>
-              <div className="flex flex-wrap gap-2">
-                {resumeData.skills.backendDevOps.map((skill) => (
-                  <span key={skill} className="px-3 py-1 rounded-lg bg-emerald-950/80 text-xs font-mono text-emerald-300 border border-emerald-800/60">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-black/40 border border-stone-800 space-y-3">
-              <div className="text-xs font-mono font-bold text-purple-400">AI / ML & NLP</div>
-              <div className="flex flex-wrap gap-2">
-                {resumeData.skills.aiMl.map((skill) => (
-                  <span key={skill} className="px-3 py-1 rounded-lg bg-purple-950/80 text-xs font-mono text-purple-300 border border-purple-800/60">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-black/40 border border-stone-800 space-y-3 sm:col-span-2">
-              <div className="text-xs font-mono font-bold text-sky-400">DATABASES & STORAGE</div>
-              <div className="flex flex-wrap gap-2">
-                {resumeData.skills.databases.map((skill) => (
-                  <span key={skill} className="px-3 py-1 rounded-lg bg-sky-950/80 text-xs font-mono text-sky-300 border border-sky-800/60">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* TAB CONTENT: Education & Experience Timeline */}
-      {activeTab === 'timeline' && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fadeIn">
-          {/* Education Card */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-stone-900/90 border border-stone-800 space-y-4">
-            <div className="flex items-center space-x-3 text-emerald-400 border-b border-stone-800 pb-4">
-              <GraduationCap size={22} />
-              <h2 className="font-bold text-xl text-white">Education</h2>
-            </div>
-
-            <div className="space-y-3">
-              <h3 className="font-bold text-white text-lg">
-                {resumeData.education.institution}
-              </h3>
-              <p className="text-sm text-stone-300">
-                {resumeData.education.degree}
-              </p>
-              <div className="flex items-center justify-between text-xs font-mono pt-2 text-stone-400">
-                <span className="bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full border border-emerald-500/30 font-bold">
-                  CGPA: {resumeData.education.cgpa}
-                </span>
-                <span>{resumeData.education.period}</span>
-              </div>
-              <p className="text-xs text-stone-400 italic pt-1">
-                Mentor: {resumeData.education.mentor}
-              </p>
-            </div>
-          </div>
-
-          {/* Achievements Card */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-stone-900/90 border border-stone-800 space-y-4">
-            <div className="flex items-center space-x-3 text-amber-400 border-b border-stone-800 pb-4">
-              <Trophy size={22} />
-              <h2 className="font-bold text-xl text-white">Honors & Hackathons</h2>
-            </div>
-
-            <div className="space-y-4">
-              {resumeData.achievements.map((ach, idx) => (
-                <div key={idx} className="flex items-start space-x-3 text-xs">
-                  <Award size={20} className="text-amber-400 shrink-0 mt-0.5" />
-                  <div>
-                    <div className="font-bold text-white text-sm">{ach.title}</div>
-                    <div className="text-stone-300 mt-1 leading-relaxed">{ach.detail}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
+      </div>
     </div>
   );
 };
