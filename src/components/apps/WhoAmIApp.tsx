@@ -13,7 +13,7 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
   const [currentFeaturedIdx, setCurrentFeaturedIdx] = useState(0);
   const [contactSubmitted, setContactSubmitted] = useState(false);
   const [isBannerDismissed, setIsBannerDismissed] = useState(false);
-  const [hasScrolled, setHasScrolled] = useState(false);
+  const [isScrolledDown, setIsScrolledDown] = useState(false);
 
   const [contactForm, setContactForm] = useState({
     firstName: '',
@@ -32,8 +32,11 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
   };
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    if (e.currentTarget.scrollTop > 15 && !hasScrolled) {
-      setHasScrolled(true);
+    const scrollTop = e.currentTarget.scrollTop;
+    if (scrollTop > 15) {
+      setIsScrolledDown(true);
+    } else {
+      setIsScrolledDown(false);
     }
   };
 
@@ -55,14 +58,14 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
   };
 
   const featuredProject = projectsData[currentFeaturedIdx];
-  const showBanner = !isBannerDismissed && !hasScrolled && !isMaximized;
+  const showBanner = !isBannerDismissed && !isScrolledDown && !isMaximized;
 
   return (
     <div
       onScroll={handleScroll}
       className="h-full overflow-y-auto custom-scrollbar bg-[#E5D8F0] text-stone-950 font-serif select-text relative"
     >
-      {/* Dynamic Full-Screen Tip Notification Banner (Auto-hides on scroll, maximize, or dismiss) */}
+      {/* Dynamic Full-Screen Tip Notification Banner (Reappears on scroll up to top when not full-screened) */}
       {showBanner && (
         <div className="bg-[#18181B] text-white px-4 py-2.5 flex items-center justify-between text-xs font-sans border-b border-white/10 sticky top-0 z-30 shadow-md transition-all duration-300">
           <div className="flex items-center space-x-2">
@@ -90,16 +93,8 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
         </div>
       )}
 
-      {/* 1. HERO SECTION (Dark Dramatic Stage Backdrop Theme) */}
-      <div className="relative min-h-[500px] sm:min-h-[560px] bg-stone-950 text-white flex flex-col items-center justify-center text-center p-8 sm:p-16 border-b-4 border-stone-950 overflow-hidden">
-        {/* Background Overlay Art */}
-        <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/70 to-stone-950/40 z-10" />
-        <img
-          src="/assets/Wallpapers/interstellar.jpg"
-          alt="Stage Backdrop"
-          className="absolute inset-0 w-full h-full object-cover opacity-40 blur-xs scale-105"
-        />
-
+      {/* 1. HERO SECTION (Clean High-Contrast Dark Theme - No Backdrop Image) */}
+      <div className="relative bg-stone-950 text-white flex flex-col items-center justify-center text-center p-10 sm:p-20 border-b-4 border-stone-950 overflow-hidden">
         <div className="relative z-20 max-w-4xl space-y-6">
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-serif tracking-widest text-white uppercase font-normal leading-tight">
             SUBHAM DAS
@@ -119,7 +114,58 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
         </div>
       </div>
 
-      {/* 2. FEATURED WORK CAROUSEL SECTION */}
+      {/* 2. ABOUT SUBHAM! SECTION (Placed BEFORE Featured Work) */}
+      <div className="py-16 px-6 sm:px-12 max-w-6xl mx-auto border-b border-stone-300">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          {/* Black & White Portrait Image */}
+          <div className="flex justify-center">
+            <div className="w-72 h-80 sm:w-80 sm:h-96 rounded-xl overflow-hidden shadow-2xl border-4 border-stone-900 bg-black">
+              <img
+                src="/assets/personalpic.jpeg"
+                alt="Subham Das"
+                className="w-full h-full object-cover object-center grayscale contrast-125 hover:grayscale-0 transition duration-700"
+              />
+            </div>
+          </div>
+
+          {/* Bio Text & Resume Button */}
+          <div className="space-y-6 text-stone-900">
+            <h2 className="text-3xl sm:text-4xl font-serif font-bold tracking-wider uppercase">
+              ABOUT SUBHAM!
+            </h2>
+
+            <p className="text-sm sm:text-base font-serif leading-relaxed text-stone-800">
+              I am a Computer Science Engineer graduating from <strong>Techno Main Salt Lake</strong> with a B.Tech in CSE (<strong>8.87 CGPA</strong>).
+              I specialize in building production-grade full-stack web applications, real-time banking architectures, and high-performance AI engines.
+            </p>
+
+            <p className="text-sm sm:text-base font-serif leading-relaxed text-stone-800">
+              This combination of strong backend system design and modern frontend aesthetics enables me to architect software that scales reliably under heavy traffic while delivering clean, intuitive user experiences.
+            </p>
+
+            <div className="pt-2 flex items-center space-x-4 flex-wrap gap-3">
+              <a
+                href={resumeData.github}
+                target="_blank"
+                rel="noreferrer"
+                className="px-6 py-3 bg-stone-950 hover:bg-stone-800 text-white text-xs font-sans font-bold uppercase tracking-widest transition-all shadow-md inline-block cursor-pointer"
+              >
+                See Resume
+              </a>
+              {onOpenApp && (
+                <button
+                  onClick={() => onOpenApp('terminal', { initialCommand: 'cat resume' })}
+                  className="px-6 py-3 bg-white border-2 border-stone-950 hover:bg-stone-100 text-stone-950 text-xs font-sans font-bold uppercase tracking-widest transition-all shadow-md inline-block cursor-pointer"
+                >
+                  View Terminal Resume
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 3. FEATURED WORK CAROUSEL SECTION */}
       <div className="py-16 px-6 sm:px-12 max-w-6xl mx-auto space-y-8 text-center">
         <h2 className="text-3xl sm:text-4xl font-serif font-bold tracking-widest uppercase text-stone-900">
           FEATURED WORK
@@ -185,7 +231,7 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
         </div>
       </div>
 
-      {/* 3. MORE WORK SECTION (4 Square Project Cards Grid) */}
+      {/* 4. MORE WORK SECTION (4 Square Project Cards Grid) */}
       <div className="py-16 px-6 sm:px-12 max-w-6xl mx-auto space-y-10 text-center border-t border-stone-300">
         <h2 className="text-3xl sm:text-4xl font-serif font-bold tracking-widest uppercase text-stone-900">
           MORE WORK
@@ -225,57 +271,6 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
               </div>
             </div>
           ))}
-        </div>
-      </div>
-
-      {/* 4. ABOUT SUBHAM! SECTION */}
-      <div className="py-16 px-6 sm:px-12 max-w-6xl mx-auto border-t border-stone-300">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Black & White Portrait Image */}
-          <div className="flex justify-center">
-            <div className="w-72 h-80 sm:w-80 sm:h-96 rounded-xl overflow-hidden shadow-2xl border-4 border-stone-900 bg-black">
-              <img
-                src="/assets/personalpic.jpeg"
-                alt="Subham Das"
-                className="w-full h-full object-cover object-center grayscale contrast-125 hover:grayscale-0 transition duration-700"
-              />
-            </div>
-          </div>
-
-          {/* Bio Text & Resume Button */}
-          <div className="space-y-6 text-stone-900">
-            <h2 className="text-3xl sm:text-4xl font-serif font-bold tracking-wider uppercase">
-              ABOUT SUBHAM!
-            </h2>
-
-            <p className="text-sm sm:text-base font-serif leading-relaxed text-stone-800">
-              I am a Computer Science Engineer graduating from <strong>Techno Main Salt Lake</strong> with a B.Tech in CSE (<strong>8.87 CGPA</strong>).
-              I specialize in building production-grade full-stack web applications, real-time banking architectures, and high-performance AI engines.
-            </p>
-
-            <p className="text-sm sm:text-base font-serif leading-relaxed text-stone-800">
-              This combination of strong backend system design and modern frontend aesthetics enables me to architect software that scales reliably under heavy traffic while delivering clean, intuitive user experiences.
-            </p>
-
-            <div className="pt-2 flex items-center space-x-4">
-              <a
-                href={resumeData.github}
-                target="_blank"
-                rel="noreferrer"
-                className="px-6 py-3 bg-stone-950 hover:bg-stone-800 text-white text-xs font-sans font-bold uppercase tracking-widest transition-all shadow-md inline-block cursor-pointer"
-              >
-                See Resume
-              </a>
-              {onOpenApp && (
-                <button
-                  onClick={() => onOpenApp('terminal', { initialCommand: 'cat resume' })}
-                  className="px-6 py-3 bg-white border-2 border-stone-950 hover:bg-stone-100 text-stone-950 text-xs font-sans font-bold uppercase tracking-widest transition-all shadow-md inline-block cursor-pointer"
-                >
-                  View Terminal Resume
-                </button>
-              )}
-            </div>
-          </div>
         </div>
       </div>
 
