@@ -17,7 +17,6 @@ import {
   ArrowRight,
   Layers,
   CheckCircle2,
-  FileText,
   User,
   Zap
 } from 'lucide-react';
@@ -30,7 +29,7 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp }) => {
   const [activeTab, setActiveTab] = useState<'overview' | 'work' | 'skills' | 'timeline'>('overview');
 
   return (
-    <div className="min-h-full bg-[#141414] text-stone-100 font-sans p-6 sm:p-10 space-y-8 select-text">
+    <div className="h-full overflow-y-auto custom-scrollbar bg-[#141414] text-stone-100 font-sans p-6 sm:p-10 space-y-8 select-text">
       {/* Modern Minimal Hero Header (Ally Doederlein Showcase Theme) */}
       <div className="relative rounded-3xl bg-gradient-to-br from-[#1E1E1E] via-[#1A1A1A] to-[#121212] border border-stone-800 p-6 sm:p-10 shadow-2xl overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -107,7 +106,7 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp }) => {
       <div className="flex items-center space-x-2 border-b border-stone-800 pb-3 overflow-x-auto scrollbar-none">
         <button
           onClick={() => setActiveTab('overview')}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all whitespace-nowrap ${
+          className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all whitespace-nowrap cursor-pointer ${
             activeTab === 'overview'
               ? 'bg-emerald-500 text-black shadow-md'
               : 'bg-stone-900/60 text-stone-400 hover:text-white hover:bg-stone-800 border border-stone-800'
@@ -119,7 +118,7 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp }) => {
 
         <button
           onClick={() => setActiveTab('work')}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all whitespace-nowrap ${
+          className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all whitespace-nowrap cursor-pointer ${
             activeTab === 'work'
               ? 'bg-emerald-500 text-black shadow-md'
               : 'bg-stone-900/60 text-stone-400 hover:text-white hover:bg-stone-800 border border-stone-800'
@@ -131,7 +130,7 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp }) => {
 
         <button
           onClick={() => setActiveTab('skills')}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all whitespace-nowrap ${
+          className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all whitespace-nowrap cursor-pointer ${
             activeTab === 'skills'
               ? 'bg-emerald-500 text-black shadow-md'
               : 'bg-stone-900/60 text-stone-400 hover:text-white hover:bg-stone-800 border border-stone-800'
@@ -143,7 +142,7 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp }) => {
 
         <button
           onClick={() => setActiveTab('timeline')}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all whitespace-nowrap ${
+          className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all whitespace-nowrap cursor-pointer ${
             activeTab === 'timeline'
               ? 'bg-emerald-500 text-black shadow-md'
               : 'bg-stone-900/60 text-stone-400 hover:text-white hover:bg-stone-800 border border-stone-800'

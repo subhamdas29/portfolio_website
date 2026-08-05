@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { projectsData } from '../../data/projectsData';
 import { Project } from '../../types';
-import { Github, ExternalLink, Code2, CheckCircle2, ShieldCheck, Zap, CreditCard, Bot, Trophy, ShoppingBag, ArrowLeft, Layers, Sparkles, Terminal } from 'lucide-react';
+import { Github, ExternalLink, Code2, CheckCircle2, ShieldCheck, Zap, CreditCard, Bot, Trophy, ShoppingBag, Layers } from 'lucide-react';
 
 interface ProjectAppProps {
   projectId?: string;
@@ -36,7 +36,7 @@ export const ProjectApp: React.FC<ProjectAppProps> = ({ projectId = 'payflow', o
       });
 
   return (
-    <div className="min-h-full bg-[#141414] text-stone-100 font-sans p-6 sm:p-10 space-y-8 select-text">
+    <div className="h-full overflow-y-auto custom-scrollbar bg-[#141414] text-stone-100 font-sans p-6 sm:p-10 space-y-8 select-text">
       {/* Category & Project Filter Pills Bar */}
       <div className="flex items-center justify-between border-b border-stone-800 pb-4 flex-wrap gap-4">
         <div className="flex items-center space-x-2.5">
