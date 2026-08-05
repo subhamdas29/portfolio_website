@@ -65,7 +65,7 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
       onScroll={handleScroll}
       className="h-full overflow-y-auto custom-scrollbar bg-[#E5D8F0] text-stone-950 font-serif select-text relative"
     >
-      {/* Dynamic Full-Screen Tip Notification Banner (Reappears on scroll up to top when not full-screened) */}
+      {/* Dynamic Full-Screen Tip Notification Banner */}
       {showBanner && (
         <div className="bg-[#18181B] text-white px-4 py-2.5 flex items-center justify-between text-xs font-sans border-b border-white/10 sticky top-0 z-30 shadow-md transition-all duration-300">
           <div className="flex items-center space-x-2">
@@ -93,29 +93,29 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
         </div>
       )}
 
-      {/* 1. HERO SECTION (Clean High-Contrast Dark Theme - No Backdrop Image) */}
-      <div className="relative bg-stone-950 text-white flex flex-col items-center justify-center text-center p-10 sm:p-20 border-b-4 border-stone-950 overflow-hidden">
+      {/* 1. HERO SECTION (Fills 100% Viewport Height) */}
+      <div className="relative min-h-[calc(100vh-60px)] h-full w-full bg-stone-950 text-white flex flex-col items-center justify-center text-center p-8 sm:p-16 border-b-4 border-stone-950 shrink-0 overflow-hidden">
         <div className="relative z-20 max-w-4xl space-y-6">
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-serif tracking-widest text-white uppercase font-normal leading-tight">
+          <h1 className="text-5xl sm:text-7xl md:text-8xl font-serif tracking-widest text-white uppercase font-normal leading-tight">
             SUBHAM DAS
           </h1>
-          <p className="text-lg sm:text-2xl font-serif italic text-stone-300 tracking-wider">
+          <p className="text-xl sm:text-3xl font-serif italic text-stone-300 tracking-wider">
             Full-Stack Engineer
           </p>
 
-          <div className="pt-4 flex flex-wrap justify-center gap-4 text-xs font-sans">
-            <span className="px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-white backdrop-blur-md">
+          <div className="pt-6 flex flex-wrap justify-center gap-4 text-xs sm:text-sm font-sans">
+            <span className="px-5 py-2 rounded-full bg-white/10 border border-white/20 text-white backdrop-blur-md">
               Kolkata, India / Remote
             </span>
-            <span className="px-4 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 font-bold backdrop-blur-md">
+            <span className="px-5 py-2 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 font-bold backdrop-blur-md">
               ● Available for Roles
             </span>
           </div>
         </div>
       </div>
 
-      {/* 2. ABOUT SUBHAM! SECTION (Placed BEFORE Featured Work) */}
-      <div className="py-16 px-6 sm:px-12 max-w-6xl mx-auto border-b border-stone-300">
+      {/* 2. ABOUT SUBHAM! SECTION */}
+      <div className="py-20 px-6 sm:px-12 max-w-6xl mx-auto border-b border-stone-300">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           {/* Black & White Portrait Image */}
           <div className="flex justify-center">
@@ -166,7 +166,7 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
       </div>
 
       {/* 3. FEATURED WORK CAROUSEL SECTION */}
-      <div className="py-16 px-6 sm:px-12 max-w-6xl mx-auto space-y-8 text-center">
+      <div className="py-20 px-6 sm:px-12 max-w-6xl mx-auto space-y-8 text-center">
         <h2 className="text-3xl sm:text-4xl font-serif font-bold tracking-widest uppercase text-stone-900">
           FEATURED WORK
         </h2>
@@ -232,7 +232,7 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
       </div>
 
       {/* 4. MORE WORK SECTION (4 Square Project Cards Grid) */}
-      <div className="py-16 px-6 sm:px-12 max-w-6xl mx-auto space-y-10 text-center border-t border-stone-300">
+      <div className="py-20 px-6 sm:px-12 max-w-6xl mx-auto space-y-10 text-center border-t border-stone-300">
         <h2 className="text-3xl sm:text-4xl font-serif font-bold tracking-widest uppercase text-stone-900">
           MORE WORK
         </h2>
@@ -275,7 +275,7 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
       </div>
 
       {/* 5. GET IN TOUCH! SECTION (Ally Doederlein Style Contact Box) */}
-      <div className="py-16 px-6 sm:px-12 max-w-5xl mx-auto border-t border-stone-300 space-y-12">
+      <div className="py-20 px-6 sm:px-12 max-w-5xl mx-auto border-t border-stone-300 space-y-12">
         {/* Giant Black Outlined Header Box */}
         <div className="border-4 border-stone-950 bg-[#E5D8F0] p-6 sm:p-8 text-center shadow-lg">
           <h2 className="text-3xl sm:text-5xl font-serif font-bold tracking-widest uppercase text-stone-950">
