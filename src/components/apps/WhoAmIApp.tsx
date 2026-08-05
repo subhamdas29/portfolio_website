@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
 import { resumeData } from '../../data/resumeData';
 import { projectsData } from '../../data/projectsData';
-import { Maximize2, Github, Linkedin, Mail, Send, ChevronLeft, ChevronRight, ExternalLink, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Maximize2, Minimize2, Github, Linkedin, Mail, ChevronLeft, ChevronRight, ExternalLink, CheckCircle2, X } from 'lucide-react';
 
 interface WhoAmIAppProps {
   onOpenApp?: (appId: string, extraProps?: Record<string, any>) => void;
+  onMaximize?: () => void;
+  isMaximized?: boolean;
 }
 
-export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp }) => {
+export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isMaximized = false }) => {
   const [currentFeaturedIdx, setCurrentFeaturedIdx] = useState(0);
   const [contactSubmitted, setContactSubmitted] = useState(false);
+  const [isBannerDismissed, setIsBannerDismissed] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
+
   const [contactForm, setContactForm] = useState({
     firstName: '',
     lastName: '',
@@ -26,6 +31,19 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp }) => {
     setCurrentFeaturedIdx((prev) => (prev - 1 + projectsData.length) % projectsData.length);
   };
 
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    if (e.currentTarget.scrollTop > 15 && !hasScrolled) {
+      setHasScrolled(true);
+    }
+  };
+
+  const handleFullScreenClick = () => {
+    setIsBannerDismissed(true);
+    if (onMaximize) {
+      onMaximize();
+    }
+  };
+
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!contactForm.email || !contactForm.message) return;
@@ -37,25 +55,43 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp }) => {
   };
 
   const featuredProject = projectsData[currentFeaturedIdx];
+  const showBanner = !isBannerDismissed && !hasScrolled && !isMaximized;
 
   return (
-    <div className="h-full overflow-y-auto custom-scrollbar bg-[#E5D8F0] text-stone-950 font-serif select-text relative">
-      {/* Full-Screen Experience Tip Notification Banner */}
-      <div className="bg-[#18181B] text-white px-4 py-2.5 flex items-center justify-between text-xs font-sans border-b border-white/10 sticky top-0 z-30 shadow-md">
-        <div className="flex items-center space-x-2">
-          <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
-          <span className="font-medium">
-            <strong className="text-amber-300">Best View Tip:</strong> Click the green 🟢 button or maximize window for the full-screen website experience!
-          </span>
+    <div
+      onScroll={handleScroll}
+      className="h-full overflow-y-auto custom-scrollbar bg-[#E5D8F0] text-stone-950 font-serif select-text relative"
+    >
+      {/* Dynamic Full-Screen Tip Notification Banner (Auto-hides on scroll, maximize, or dismiss) */}
+      {showBanner && (
+        <div className="bg-[#18181B] text-white px-4 py-2.5 flex items-center justify-between text-xs font-sans border-b border-white/10 sticky top-0 z-30 shadow-md transition-all duration-300">
+          <div className="flex items-center space-x-2">
+            <span className="font-medium">
+              <strong className="text-amber-300">Note:</strong> Click the green 🟢 button or Full Screen button for the full website experience!
+            </span>
+          </div>
+          <div className="flex items-center space-x-3">
+            <button
+              onClick={handleFullScreenClick}
+              className="flex items-center space-x-1 px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-white text-[11px] font-mono transition-all cursor-pointer border border-white/15"
+              title="Toggle Full Screen"
+            >
+              {isMaximized ? <Minimize2 className="w-3 h-3" /> : <Maximize2 className="w-3 h-3" />}
+              <span>{isMaximized ? 'Restore' : 'Full Screen'}</span>
+            </button>
+            <button
+              onClick={() => setIsBannerDismissed(true)}
+              className="p-1 rounded text-stone-400 hover:text-white transition-all cursor-pointer"
+              title="Dismiss note"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
         </div>
-        <div className="flex items-center space-x-1 text-[11px] font-mono text-stone-400">
-          <Maximize2 className="w-3 h-3" />
-          <span>Full Screen</span>
-        </div>
-      </div>
+      )}
 
       {/* 1. HERO SECTION (Dark Dramatic Stage Backdrop Theme) */}
-      <div className="relative min-h-[500px] sm:min-h-[580px] bg-stone-950 text-white flex flex-col items-center justify-center text-center p-8 sm:p-16 border-b-4 border-stone-950 overflow-hidden">
+      <div className="relative min-h-[500px] sm:min-h-[560px] bg-stone-950 text-white flex flex-col items-center justify-center text-center p-8 sm:p-16 border-b-4 border-stone-950 overflow-hidden">
         {/* Background Overlay Art */}
         <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/70 to-stone-950/40 z-10" />
         <img
@@ -69,7 +105,7 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp }) => {
             SUBHAM DAS
           </h1>
           <p className="text-lg sm:text-2xl font-serif italic text-stone-300 tracking-wider">
-            Full-Stack Engineer &amp; Systems Architect
+            Full-Stack Engineer
           </p>
 
           <div className="pt-4 flex flex-wrap justify-center gap-4 text-xs font-sans">

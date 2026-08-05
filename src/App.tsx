@@ -129,7 +129,6 @@ export const App: React.FC = () => {
   const [isHeartModalOpen, setIsHeartModalOpen] = useState<boolean>(false);
   const [highestZIndex, setHighestZIndex] = useState<number>(25);
 
-  // Desktop Wallpaper State (Persisted in localStorage with fallback validation)
   const [wallpaper, setWallpaper] = useState<string>(() => {
     const saved = localStorage.getItem('portfolio_desktop_wallpaper');
     if (saved && (saved.includes('spiderman') || saved.includes('f1_wallpaper') || saved.includes('interstellar') || saved.includes('lunar') || saved.includes('dandelion') || saved.includes('pexels') || saved.includes('36307') || saved.includes('4545909'))) {
@@ -344,7 +343,13 @@ export const App: React.FC = () => {
               initialCommand={win.contentProps?.initialCommand}
             />
           )}
-          {win.id === 'whoami' && <WhoAmIApp onOpenApp={openApp} />}
+          {win.id === 'whoami' && (
+            <WhoAmIApp
+              onOpenApp={openApp}
+              onMaximize={() => toggleMaximizeWindow('whoami')}
+              isMaximized={win.isMaximized}
+            />
+          )}
           {win.id === 'project' && (
             <ProjectApp
               projectId={win.contentProps?.projectId}
