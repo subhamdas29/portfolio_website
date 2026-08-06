@@ -109,14 +109,14 @@ const INITIAL_WINDOWS: AppWindow[] = [
   },
   {
     id: 'resume_viewer',
-    title: 'Subham_Das_Resume.png',
+    title: 'Subham_Das_Resume.jpg',
     icon: 'Image',
     isOpen: false,
     isMinimized: false,
     isMaximized: false,
     zIndex: 6,
     position: { x: 200, y: 60 },
-    size: { width: 720, height: 600 },
+    size: { width: 750, height: 620 },
   },
   {
     id: 'project',
