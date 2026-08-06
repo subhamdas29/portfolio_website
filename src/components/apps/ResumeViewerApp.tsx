@@ -4,43 +4,58 @@ import { Download, ExternalLink, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react
 export const ResumeViewerApp: React.FC = () => {
   const [zoomLevel, setZoomLevel] = useState<number>(100);
 
-  const handleZoomIn = () => setZoomLevel(prev => Math.min(prev + 25, 225));
-  const handleZoomOut = () => setZoomLevel(prev => Math.max(prev - 25, 50));
+  const handleZoomIn = () => setZoomLevel(prev => Math.min(prev + 20, 250));
+  const handleZoomOut = () => setZoomLevel(prev => Math.max(prev - 20, 50));
   const handleResetZoom = () => setZoomLevel(100);
 
+  // Wheel zoom handler: Ctrl/Cmd + wheel adjusts zoomLevel, standard scroll scrolls page
+  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+      if (e.deltaY < 0) {
+        setZoomLevel(prev => Math.min(prev + 10, 250));
+      } else {
+        setZoomLevel(prev => Math.max(prev - 10, 50));
+      }
+    }
+  };
+
+  // Base display width at 100% zoom is 850px for optimum sharp text legibility
+  const calculatedWidth = Math.round(850 * (zoomLevel / 100));
+
   return (
-    <div className="h-full overflow-y-auto custom-scrollbar bg-[#121214] text-stone-100 font-sans flex flex-col items-center select-text p-4 space-y-4">
-      {/* Sticky Header Controls Bar */}
-      <div className="sticky top-0 z-20 w-full max-w-3xl flex items-center justify-between p-3 bg-stone-900/90 backdrop-blur-md border border-stone-800 rounded-2xl shadow-xl shrink-0">
+    <div className="h-full w-full overflow-hidden bg-[#121214] text-stone-100 font-sans flex flex-col select-text">
+      {/* Sticky Header Controls Bar (JPG logo removed) */}
+      <div className="w-full flex items-center justify-between px-4 py-3 bg-stone-900 border-b border-stone-800 shadow-xl shrink-0 z-20">
         <div className="flex items-center space-x-2 text-xs font-mono text-stone-300">
-          <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 font-bold">JPG</span>
-          <span className="font-bold">Subham_Das_Resume.jpg</span>
+          <span className="font-bold tracking-wide text-stone-200">Subham_Das_Resume.jpg</span>
         </div>
 
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-3">
+          {/* Zoom Controls */}
           <div className="flex items-center space-x-1 bg-stone-800 p-1 rounded-xl border border-stone-700">
             <button
               onClick={handleZoomOut}
-              className="p-1 rounded-lg hover:bg-stone-700 text-stone-300 hover:text-white transition-all cursor-pointer"
+              className="p-1.5 rounded-lg hover:bg-stone-700 text-stone-300 hover:text-white transition-all cursor-pointer"
               title="Zoom Out"
             >
-              <ZoomOut size={14} />
+              <ZoomOut size={15} />
             </button>
-            <span className="text-[11px] font-mono w-10 text-center font-bold text-emerald-400">{zoomLevel}%</span>
+            <span className="text-xs font-mono w-12 text-center font-bold text-emerald-400">{zoomLevel}%</span>
             <button
               onClick={handleZoomIn}
-              className="p-1 rounded-lg hover:bg-stone-700 text-stone-300 hover:text-white transition-all cursor-pointer"
+              className="p-1.5 rounded-lg hover:bg-stone-700 text-stone-300 hover:text-white transition-all cursor-pointer"
               title="Zoom In"
             >
-              <ZoomIn size={14} />
+              <ZoomIn size={15} />
             </button>
             {zoomLevel !== 100 && (
               <button
                 onClick={handleResetZoom}
-                className="p-1 rounded-lg hover:bg-stone-700 text-stone-400 hover:text-white transition-all cursor-pointer"
-                title="Reset Zoom"
+                className="p-1.5 rounded-lg hover:bg-stone-700 text-stone-400 hover:text-white transition-all cursor-pointer"
+                title="Reset Zoom to 100%"
               >
-                <RotateCcw size={13} />
+                <RotateCcw size={14} />
               </button>
             )}
           </div>
@@ -49,7 +64,7 @@ export const ResumeViewerApp: React.FC = () => {
             href="/assets/resume_subham.jpg"
             target="_blank"
             rel="noreferrer"
-            className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-xs font-mono text-white border border-stone-700 transition-all cursor-pointer"
+            className="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-xs font-mono text-white border border-stone-700 transition-all cursor-pointer"
             title="Open image in new tab"
           >
             <ExternalLink size={13} />
@@ -58,7 +73,7 @@ export const ResumeViewerApp: React.FC = () => {
           <a
             href="/assets/resume_subham.jpg"
             download="Subham_Das_Resume.jpg"
-            className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs font-mono text-white font-bold transition-all shadow-sm cursor-pointer"
+            className="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs font-mono text-white font-bold transition-all shadow-md cursor-pointer"
             title="Download resume image"
           >
             <Download size={13} />
@@ -67,14 +82,19 @@ export const ResumeViewerApp: React.FC = () => {
         </div>
       </div>
 
-      {/* High Quality Scrollable Resume Image Container */}
-      <div className="w-full max-w-3xl rounded-2xl overflow-x-auto overflow-y-visible shadow-2xl border border-stone-800 bg-stone-950 p-2 flex justify-center">
-        <img
-          src="/assets/resume_subham.jpg"
-          alt="Subham Das Resume"
-          style={{ width: `${zoomLevel}%`, maxWidth: zoomLevel === 100 ? '100%' : 'none' }}
-          className="h-auto object-contain block transition-all duration-200 rounded-lg shadow-inner"
-        />
+      {/* Main Scrollable Canvas for Document */}
+      <div
+        onWheel={handleWheel}
+        className="flex-1 w-full overflow-auto custom-scrollbar p-6 flex justify-center items-start bg-stone-950"
+      >
+        <div className="relative shadow-2xl rounded-lg overflow-hidden border border-stone-800 bg-white transition-all duration-150 my-auto">
+          <img
+            src="/assets/resume_subham.jpg"
+            alt="Subham Das Resume"
+            style={{ width: `${calculatedWidth}px`, maxWidth: 'none' }}
+            className="h-auto block select-none"
+          />
+        </div>
       </div>
     </div>
   );
