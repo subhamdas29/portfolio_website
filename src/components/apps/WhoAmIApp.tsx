@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { resumeData } from '../../data/resumeData';
 import { projectsData } from '../../data/projectsData';
-import { Maximize2, Minimize2, Github, Linkedin, Mail, ChevronLeft, ChevronRight, ExternalLink, CheckCircle2, X } from 'lucide-react';
+import { Maximize2, Minimize2, Github, Linkedin, Mail, ChevronLeft, ChevronRight, ExternalLink, CheckCircle2, X, FileText } from 'lucide-react';
 
 interface WhoAmIAppProps {
   onOpenApp?: (appId: string, extraProps?: Record<string, any>) => void;
@@ -44,6 +44,14 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
     setIsBannerDismissed(true);
     if (onMaximize) {
       onMaximize();
+    }
+  };
+
+  const handleSeeResumeClick = () => {
+    if (onOpenApp) {
+      onOpenApp('resume_viewer');
+    } else {
+      window.open('/assets/resume_subham.png', '_blank');
     }
   };
 
@@ -130,22 +138,13 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
             </p>
 
             <div className="pt-2 flex items-center space-x-4 flex-wrap gap-3">
-              <a
-                href={resumeData.github}
-                target="_blank"
-                rel="noreferrer"
-                className="px-6 py-3 bg-stone-950 hover:bg-stone-800 text-white text-xs font-sans font-bold uppercase tracking-widest transition-all shadow-md inline-block cursor-pointer"
+              <button
+                onClick={handleSeeResumeClick}
+                className="px-6 py-3 bg-stone-950 hover:bg-stone-800 text-white text-xs font-sans font-bold uppercase tracking-widest transition-all shadow-md inline-flex items-center space-x-2 cursor-pointer"
               >
-                See Resume
-              </a>
-              {onOpenApp && (
-                <button
-                  onClick={() => onOpenApp('terminal', { initialCommand: 'cat resume' })}
-                  className="px-6 py-3 bg-white border-2 border-stone-950 hover:bg-stone-100 text-stone-950 text-xs font-sans font-bold uppercase tracking-widest transition-all shadow-md inline-block cursor-pointer"
-                >
-                  View Terminal Resume
-                </button>
-              )}
+                <FileText size={14} />
+                <span>See Resume</span>
+              </button>
             </div>
           </div>
         </div>

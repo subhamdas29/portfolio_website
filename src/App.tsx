@@ -14,6 +14,7 @@ import { HeartsApp } from './components/apps/HeartsApp';
 import { WeatherApp } from './components/apps/WeatherApp';
 import { GalleryApp } from './components/apps/GalleryApp';
 import { MessagesApp } from './components/apps/MessagesApp';
+import { ResumeViewerApp } from './components/apps/ResumeViewerApp';
 import { AppWindow, Liker } from './types';
 import { fetchLikes, signupLike, loginLike, toggleLike, getStoredUserLike } from './api/client';
 
@@ -105,6 +106,17 @@ const INITIAL_WINDOWS: AppWindow[] = [
     zIndex: 5,
     position: { x: 180, y: 80 },
     size: { width: 800, height: 560 },
+  },
+  {
+    id: 'resume_viewer',
+    title: 'Subham_Das_Resume.png',
+    icon: 'Image',
+    isOpen: false,
+    isMinimized: false,
+    isMaximized: false,
+    zIndex: 6,
+    position: { x: 200, y: 60 },
+    size: { width: 720, height: 600 },
   },
   {
     id: 'project',
@@ -291,7 +303,7 @@ export const App: React.FC = () => {
           x: Math.round(window.innerWidth * 0.87), 
           y: Math.round(window.innerHeight * 0.28) 
         }}
-        onDoubleClick={() => openApp('whoami')}
+        onDoubleClick={() => openApp('resume_viewer')}
       />
 
       <DesktopFile
@@ -350,6 +362,7 @@ export const App: React.FC = () => {
               isMaximized={win.isMaximized}
             />
           )}
+          {win.id === 'resume_viewer' && <ResumeViewerApp />}
           {win.id === 'project' && (
             <ProjectApp
               projectId={win.contentProps?.projectId}
