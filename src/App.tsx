@@ -115,8 +115,8 @@ const INITIAL_WINDOWS: AppWindow[] = [
     isMinimized: false,
     isMaximized: false,
     zIndex: 6,
-    position: { x: 200, y: 60 },
-    size: { width: 750, height: 620 },
+    position: { x: 160, y: 50 },
+    size: { width: 920, height: 680 },
   },
   {
     id: 'project',
@@ -217,7 +217,7 @@ export const App: React.FC = () => {
           isMaximized: false,
           zIndex: nextZ,
           position: { x: 120 + (prev.length * 20), y: 80 + (prev.length * 20) },
-          size: { width: 780, height: 500 },
+          size: { width: 920, height: 680 },
           contentProps: extraProps,
         };
         return [...prev, newWindow];
