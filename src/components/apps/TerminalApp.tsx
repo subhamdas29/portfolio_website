@@ -194,7 +194,7 @@ export const TerminalApp: React.FC<TerminalAppProps> = ({ onOpenApp, onOpenHelp,
               {`=============================================================
 SUBHAM DAS - FULL-STACK DEVELOPER
 Phone: +91 8582953151 | Email: subhamdas5477@gmail.com
-GitHub: https://github.com/subhamdas5477 | LinkedIn: https://linkedin.com/in/subhamdas5477
+GitHub: https://github.com/subhamdas29 | LinkedIn: https://www.linkedin.com/in/subhamdas29
 =============================================================
 
 SUMMARY:
@@ -202,7 +202,7 @@ ${resumeData.summary}
 
 EDUCATION:
 Techno Institute of Engineering & Management
-B.Tech. in Computer Science & Engineering | CGPA: 7.6/10 | Oct. 2022 - Jul. 2026
+B.Tech. in Computer Science & Engineering | CGPA: 7.5/10 | Oct. 2022 - Jul. 2026
 
 TECHNICAL SKILLS:
 - Languages: TypeScript, JavaScript, Python, SQL
@@ -213,7 +213,7 @@ TECHNICAL SKILLS:
 
 KEY EXPERIENCE & FYP:
 ResumePilot (FYP - 2026): ATS Score & Suggestions Tool
-- Lead Backend Developer | Mentor: Dr. Syamal Patra
+- Lead Backend Developer
 - Asynchronous FastAPI backend reducing latency by 60% with asyncio.gather.
 - Two-layer NLP extraction pipeline using spaCy, NER model, and Groq API.
 - Supabase PostgreSQL schema with weighted ATS score formula.
@@ -245,8 +245,8 @@ HONORS & ACHIEVEMENTS:
             <div className="p-3 rounded bg-black/50 border border-white/10 text-xs font-mono text-amber-300">
               <div>Email: subhamdas5477@gmail.com</div>
               <div>Phone: +91 8582953151</div>
-              <div>GitHub: https://github.com/subhamdas5477</div>
-              <div>LinkedIn: https://linkedin.com/in/subhamdas5477</div>
+              <div>GitHub: https://github.com/subhamdas29</div>
+              <div>LinkedIn: https://www.linkedin.com/in/subhamdas29</div>
             </div>
           );
         } else {

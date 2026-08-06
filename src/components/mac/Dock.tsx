@@ -124,14 +124,14 @@ export const Dock: React.FC<DockProps> = ({ windows, onOpenApp }) => {
       name: 'GitHub',
       bg: 'bg-gradient-to-b from-stone-800 to-zinc-950 border-zinc-700',
       icon: <Github className="w-6 h-6 text-white" />,
-      action: () => window.open('https://github.com/subhamdas5477', '_blank'),
+      action: () => window.open('https://github.com/subhamdas29', '_blank'),
     },
     {
       id: 'linkedin',
       name: 'LinkedIn',
       bg: 'bg-gradient-to-b from-sky-600 to-blue-700 border-sky-400/50',
       icon: <Linkedin className="w-6 h-6 text-white" />,
-      action: () => window.open('https://linkedin.com/in/subhamdas5477', '_blank'),
+      action: () => window.open('https://www.linkedin.com/in/subhamdas29', '_blank'),
     },
     {
       id: 'finder',
