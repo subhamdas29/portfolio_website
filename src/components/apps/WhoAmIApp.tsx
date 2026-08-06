@@ -93,7 +93,7 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
         </div>
       )}
 
-      {/* 1. HERO SECTION (Fills 100% Viewport Height) */}
+      {/* 1. HERO SECTION (100% Viewport Height) */}
       <div className="relative min-h-[calc(100vh-60px)] h-full w-full bg-stone-950 text-white flex flex-col items-center justify-center text-center p-8 sm:p-16 border-b-4 border-stone-950 shrink-0 overflow-hidden">
         <div className="relative z-20 max-w-4xl space-y-6">
           <h1 className="text-5xl sm:text-7xl md:text-8xl font-serif tracking-widest text-white uppercase font-normal leading-tight">
@@ -114,16 +114,16 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
         </div>
       </div>
 
-      {/* 2. ABOUT SUBHAM! SECTION */}
+      {/* 2. ABOUT SUBHAM! SECTION (Full Color Personal Photo & Updated Bio Text) */}
       <div className="py-20 px-6 sm:px-12 max-w-6xl mx-auto border-b border-stone-300">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Black & White Portrait Image */}
+          {/* Natural Full-Color Personal Photo Container */}
           <div className="flex justify-center">
             <div className="w-72 h-80 sm:w-80 sm:h-96 rounded-xl overflow-hidden shadow-2xl border-4 border-stone-900 bg-black">
               <img
                 src="/assets/personalpic.jpeg"
                 alt="Subham Das"
-                className="w-full h-full object-cover object-center grayscale contrast-125 hover:grayscale-0 transition duration-700"
+                className="w-full h-full object-cover object-center transition duration-500 hover:scale-105"
               />
             </div>
           </div>
@@ -135,12 +135,7 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
             </h2>
 
             <p className="text-sm sm:text-base font-serif leading-relaxed text-stone-800">
-              I am a Computer Science Engineer graduating from <strong>Techno Main Salt Lake</strong> with a B.Tech in CSE (<strong>8.87 CGPA</strong>).
-              I specialize in building production-grade full-stack web applications, real-time banking architectures, and high-performance AI engines.
-            </p>
-
-            <p className="text-sm sm:text-base font-serif leading-relaxed text-stone-800">
-              This combination of strong backend system design and modern frontend aesthetics enables me to architect software that scales reliably under heavy traffic while delivering clean, intuitive user experiences.
+              {resumeData.summary}
             </p>
 
             <div className="pt-2 flex items-center space-x-4 flex-wrap gap-3">

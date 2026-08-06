@@ -8,7 +8,7 @@ export const projectsData: Project[] = [
     type: 'Personal',
     period: 'Apr. 2026 - May 2026',
     techStack: ['React.js', 'Node.js', 'Express.js', 'TypeScript', 'Tailwind CSS', 'PostgreSQL', 'Prisma ORM', 'Socket.io'],
-    githubUrl: 'https://github.com/subhamdas5477/payflow',
+    githubUrl: 'https://github.com/subhamdas29/Financial_management_app',
     liveUrl: 'https://payflow-app.vercel.app',
     icon: 'CreditCard',
     highlights: [
@@ -25,7 +25,7 @@ export const projectsData: Project[] = [
     type: 'FYP',
     period: 'Dec. 2025 - Jul. 2026',
     techStack: ['FastAPI', 'Python', 'spaCy', 'HuggingFace', 'Groq API', 'PostgreSQL', 'Supabase', 'asyncio'],
-    githubUrl: 'https://github.com/subhamdas5477/resumepilot',
+    githubUrl: 'https://github.com/subhamdas29/ATS_resume_matcher',
     liveUrl: 'https://resumepilot-ai.vercel.app',
     icon: 'Bot',
     highlights: [
@@ -42,7 +42,7 @@ export const projectsData: Project[] = [
     type: 'Open-Source',
     period: 'Jan. 2026 - Mar. 2026',
     techStack: ['TypeScript', 'React.js', 'Node.js', 'WebSocket', 'Chess.js', 'Stockfish WASM', 'Tailwind CSS'],
-    githubUrl: 'https://github.com/subhamdas5477/chess-plus',
+    githubUrl: 'https://github.com/subhamdas29/ATS_resume_matcher',
     liveUrl: 'https://chess-plus.vercel.app',
     icon: 'Trophy',
     highlights: [
@@ -59,7 +59,7 @@ export const projectsData: Project[] = [
     type: 'Personal',
     period: 'Sep. 2025 - Nov. 2025',
     techStack: ['React.js', 'TypeScript', 'Node.js', 'Express.js', 'MongoDB', 'Mapbox GL', 'Stripe API'],
-    githubUrl: 'https://github.com/subhamdas5477/foodrush',
+    githubUrl: 'https://github.com/subhamdas29/Financial_management_app',
     liveUrl: 'https://foodrush.vercel.app',
     icon: 'ShoppingBag',
     highlights: [
