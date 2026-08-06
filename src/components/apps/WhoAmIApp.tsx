@@ -102,15 +102,6 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
           <p className="text-xl sm:text-3xl font-serif italic text-stone-300 tracking-wider">
             Full-Stack Engineer
           </p>
-
-          <div className="pt-6 flex flex-wrap justify-center gap-4 text-xs sm:text-sm font-sans">
-            <span className="px-5 py-2 rounded-full bg-white/10 border border-white/20 text-white backdrop-blur-md">
-              Kolkata, India / Remote
-            </span>
-            <span className="px-5 py-2 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 font-bold backdrop-blur-md">
-              ● Available for Roles
-            </span>
-          </div>
         </div>
       </div>
 
