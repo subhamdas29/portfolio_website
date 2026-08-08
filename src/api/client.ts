@@ -145,3 +145,23 @@ export const deleteComment = async (id: string, email: string): Promise<{ succes
     return { success: false, message: 'Network error deleting comment' };
   }
 };
+
+export const sendContactForm = async (data: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  subject?: string;
+  message: string;
+}): Promise<{ success: boolean; message?: string }> => {
+  try {
+    const res = await fetch(`${API_BASE}/contact`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    return await res.json();
+  } catch (err) {
+    console.error('sendContactForm error:', err);
+    return { success: false, message: 'Network error submitting inquiry.' };
+  }
+};

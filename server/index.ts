@@ -45,8 +45,18 @@ const commentSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
+const contactMessageSchema = new mongoose.Schema({
+  firstName: { type: String, required: true, trim: true },
+  lastName: { type: String, required: true, trim: true },
+  email: { type: String, required: true, lowercase: true, trim: true },
+  subject: { type: String, default: 'General Inquiry', trim: true },
+  message: { type: String, required: true, trim: true },
+  createdAt: { type: Date, default: Date.now },
+});
+
 const LikeModel = mongoose.model('Like', likeSchema);
 const CommentModel = mongoose.model('Comment', commentSchema);
+const ContactMessageModel = mongoose.model('ContactMessage', contactMessageSchema);
 
 async function connectDB() {
   if (!MONGODB_URI) {
@@ -82,12 +92,62 @@ const fallbackComments = [
   },
 ];
 
+const fallbackContactMessages: any[] = [];
+
 // --- Health Check ---
 app.get('/api/health', (req: Request, res: Response) => {
   res.json({
     status: 'ok',
     isMongoConnected,
     serverTime: new Date().toISOString(),
+  });
+});
+
+// --- POST Contact Form Submission (Stored directly in MongoDB Atlas) ---
+app.post('/api/contact', async (req: Request, res: Response) => {
+  const { firstName, lastName, email, subject, message } = req.body;
+
+  if (!firstName || !lastName || !email || !message) {
+    return res.status(400).json({ success: false, message: 'First name, last name, email, and message are required.' });
+  }
+
+  const cleanEmail = email.toLowerCase().trim();
+
+  if (isMongoConnected) {
+    try {
+      const newMessage = new ContactMessageModel({
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+        email: cleanEmail,
+        subject: (subject || 'General Inquiry').trim(),
+        message: message.trim(),
+      });
+
+      await newMessage.save();
+      console.log('Successfully saved Get In Touch message from:', cleanEmail);
+      return res.json({
+        success: true,
+        message: 'Inquiry saved successfully to MongoDB Atlas database.',
+      });
+    } catch (err) {
+      console.error('Error saving contact message to MongoDB:', err);
+      return res.status(500).json({ success: false, message: 'Database error saving contact inquiry.' });
+    }
+  }
+
+  fallbackContactMessages.push({
+    id: Date.now().toString(),
+    firstName,
+    lastName,
+    email: cleanEmail,
+    subject,
+    message,
+    createdAt: new Date().toISOString(),
+  });
+
+  return res.json({
+    success: true,
+    message: 'Inquiry stored in temporary portfolio memory.',
   });
 });
 

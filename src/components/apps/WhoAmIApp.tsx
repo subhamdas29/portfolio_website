@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { resumeData } from '../../data/resumeData';
 import { projectsData } from '../../data/projectsData';
+import { sendContactForm } from '../../api/client';
 import { Maximize2, Minimize2, Github, Linkedin, Mail, ChevronLeft, ChevronRight, ExternalLink, CheckCircle2, X, FileText } from 'lucide-react';
 
 interface WhoAmIAppProps {
@@ -55,10 +56,13 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
     }
   };
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!contactForm.email || !contactForm.message) return;
+    if (!contactForm.email || !contactForm.message || !contactForm.firstName || !contactForm.lastName) return;
+
     setContactSubmitted(true);
+    await sendContactForm(contactForm);
+
     setTimeout(() => {
       setContactSubmitted(false);
       setContactForm({ firstName: '', lastName: '', email: '', subject: '', message: '' });
@@ -284,8 +288,10 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
                 <Github size={16} />
               </a>
               <a
-                href={`mailto:${resumeData.email}`}
-                className="w-9 h-9 rounded-full bg-stone-950 text-white flex items-center justify-center hover:bg-stone-800 transition-all shadow-md"
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=subhamdas5477@gmail.com"
+                target="_blank"
+                rel="noreferrer"
+                className="w-9 h-9 rounded-full bg-stone-950 text-white flex items-center justify-center hover:bg-stone-800 transition-all shadow-md cursor-pointer"
                 title="Email Me"
               >
                 <Mail size={16} />
@@ -299,7 +305,7 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
               <div className="p-8 bg-emerald-100 border-2 border-emerald-600 rounded-xl text-center space-y-2 text-emerald-950 font-sans">
                 <CheckCircle2 size={32} className="mx-auto text-emerald-600" />
                 <h4 className="font-bold text-base">Message Sent Successfully!</h4>
-                <p className="text-xs text-emerald-800">Thank you for reaching out. Subham will get back to you shortly.</p>
+                <p className="text-xs text-emerald-800">Your message has been securely submitted and stored in Subham's database. Subham will get back to you shortly.</p>
               </div>
             ) : (
               <form onSubmit={handleContactSubmit} className="space-y-4 font-sans text-xs">
