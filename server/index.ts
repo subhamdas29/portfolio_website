@@ -27,6 +27,7 @@ app.use(express.json());
 // MongoDB Connection
 const MONGODB_URI = process.env.MONGODB_URI || '';
 let isMongoConnected = false;
+let dbConnectPromise: Promise<any> | null = null;
 
 // Mongoose Schemas & Models
 const likeSchema = new mongoose.Schema({
@@ -59,21 +60,41 @@ const CommentModel = mongoose.model('Comment', commentSchema);
 const ContactMessageModel = mongoose.model('ContactMessage', contactMessageSchema);
 
 async function connectDB() {
+  if (isMongoConnected && mongoose.connection.readyState === 1) {
+    return;
+  }
   if (!MONGODB_URI) {
     console.warn('MONGODB_URI is not set in environment variables.');
     return;
   }
+  if (dbConnectPromise) {
+    await dbConnectPromise;
+    return;
+  }
   try {
-    await mongoose.connect(MONGODB_URI);
+    dbConnectPromise = mongoose.connect(MONGODB_URI, {
+      bufferCommands: false,
+      serverSelectionTimeoutMS: 5000,
+    });
+    await dbConnectPromise;
     isMongoConnected = true;
     console.log('Successfully connected to MongoDB Atlas for Portfolio Storage & Messages');
   } catch (err) {
     console.error('MongoDB Atlas Connection Error:', err);
     isMongoConnected = false;
+    dbConnectPromise = null;
   }
 }
 
 connectDB();
+
+// Database Connection Middleware for Vercel Serverless Functions
+app.use(async (req: Request, res: Response, next) => {
+  if (!isMongoConnected && MONGODB_URI) {
+    await connectDB();
+  }
+  next();
+});
 
 // Fallback in-memory storage if MongoDB is offline
 const fallbackLikers = [
@@ -216,12 +237,17 @@ app.post('/api/likes/signup', async (req: Request, res: Response) => {
     }
   }
 
+  const existingFallback = fallbackLikers.find(l => l.email === cleanEmail);
+  if (!existingFallback) {
+    fallbackLikers.push({ name, occupation: occupation || 'Visitor', email: cleanEmail });
+  }
+
   return res.json({
     success: true,
     user: { name, occupation: occupation || 'Visitor', email: cleanEmail },
     data: {
-      count: fallbackLikers.length + 1,
-      likers: [...fallbackLikers, { name, occupation: occupation || 'Visitor', email: cleanEmail }],
+      count: fallbackLikers.length,
+      likers: fallbackLikers,
     },
   });
 });
@@ -262,9 +288,10 @@ app.post('/api/likes/login', async (req: Request, res: Response) => {
     }
   }
 
+  const user = fallbackLikers.find(l => l.email === cleanEmail);
   return res.json({
     success: true,
-    user: { name: 'Logged User', occupation: 'Visitor', email: cleanEmail },
+    user: user || { name: cleanEmail.split('@')[0], occupation: 'Visitor', email: cleanEmail },
     data: {
       count: fallbackLikers.length,
       likers: fallbackLikers,
@@ -315,7 +342,14 @@ app.post('/api/likes/toggle', async (req: Request, res: Response) => {
     }
   }
 
-  return res.json({ success: true, userHasLiked: true, count: fallbackLikers.length });
+  const idx = fallbackLikers.findIndex(l => l.email === cleanEmail);
+  if (idx !== -1) {
+    fallbackLikers.splice(idx, 1);
+    return res.json({ success: true, userHasLiked: false, count: fallbackLikers.length });
+  } else {
+    fallbackLikers.push({ name: cleanEmail.split('@')[0], occupation: 'Visitor', email: cleanEmail });
+    return res.json({ success: true, userHasLiked: true, count: fallbackLikers.length });
+  }
 });
 
 // --- GET Comments ---

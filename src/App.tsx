@@ -16,7 +16,7 @@ import { GalleryApp } from './components/apps/GalleryApp';
 import { MessagesApp } from './components/apps/MessagesApp';
 import { ResumeViewerApp } from './components/apps/ResumeViewerApp';
 import { AppWindow, Liker } from './types';
-import { fetchLikes, signupLike, loginLike, toggleLike, getStoredUserLike } from './api/client';
+import { fetchLikes, signupLike, loginLike, toggleLike, getStoredUserLike, setStoredUserLike } from './api/client';
 
 const INITIAL_WINDOWS: AppWindow[] = [
   {
@@ -238,7 +238,7 @@ export const App: React.FC = () => {
   };
 
   const handleHeartClick = async () => {
-    const storedUser = getStoredUserLike();
+    const storedUser = userLiker || getStoredUserLike();
 
     if (storedUser && storedUser.email) {
       try {
@@ -261,7 +261,12 @@ export const App: React.FC = () => {
     if (res.success && res.data) {
       setHeartCount(res.data.count);
       setUserHasLiked(true);
-      setUserLiker(res.user || null);
+      if (res.user) {
+        setUserLiker(res.user);
+        setStoredUserLike(res.user);
+      }
+    } else {
+      throw new Error(res.message || 'Signup failed.');
     }
   };
 
@@ -270,7 +275,12 @@ export const App: React.FC = () => {
     if (res.success && res.data) {
       setHeartCount(res.data.count);
       setUserHasLiked(true);
-      setUserLiker(res.user || null);
+      if (res.user) {
+        setUserLiker(res.user);
+        setStoredUserLike(res.user);
+      }
+    } else {
+      throw new Error(res.message || 'Login failed.');
     }
   };
 
