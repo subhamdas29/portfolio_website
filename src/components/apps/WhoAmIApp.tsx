@@ -113,7 +113,7 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
         </div>
       </div>
 
-      {/* 2. ABOUT SUBHAM! SECTION (Full Color Personal Photo & Updated Bio Text) */}
+      {/* 2. ABOUT SUBHAM! SECTION */}
       <div className="py-20 px-6 sm:px-12 max-w-6xl mx-auto border-b border-stone-300">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           {/* Natural Full-Color Personal Photo Container */}
@@ -157,10 +157,10 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
         </h2>
 
         {/* Carousel Container */}
-        <div className="relative rounded-2xl overflow-hidden bg-stone-900 text-white shadow-2xl border border-stone-800">
-          <div className="relative aspect-video max-h-[460px] w-full overflow-hidden bg-black flex items-center justify-center">
-            {/* Project Image & Details */}
-            <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-transparent to-black/30 z-10" />
+        <div className="relative rounded-2xl overflow-hidden bg-stone-950 text-white shadow-2xl border border-stone-800">
+          <div className="relative aspect-video max-h-[480px] w-full overflow-hidden bg-black flex items-center justify-center">
+            {/* Extended Dark Glow Gradient Overlay for Maximum Text Contrast */}
+            <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/75 to-black/25 z-10" />
             <img
               src={featuredProject.imageUrl || '/assets/payflow_thumbnail.png'}
               alt={featuredProject.title}
@@ -170,7 +170,7 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
             {/* Navigation Left Arrow */}
             <button
               onClick={prevFeatured}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition-all cursor-pointer border border-white/20 shadow-lg"
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/70 hover:bg-black/90 text-white flex items-center justify-center transition-all cursor-pointer border border-white/20 shadow-lg"
               title="Previous Project"
             >
               <ChevronLeft size={28} />
@@ -179,7 +179,7 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
             {/* Navigation Right Arrow */}
             <button
               onClick={nextFeatured}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition-all cursor-pointer border border-white/20 shadow-lg"
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/70 hover:bg-black/90 text-white flex items-center justify-center transition-all cursor-pointer border border-white/20 shadow-lg"
               title="Next Project"
             >
               <ChevronRight size={28} />
@@ -187,19 +187,19 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
 
             {/* Project Overlay Info */}
             <div className="absolute bottom-6 left-6 right-6 z-20 text-left space-y-2">
-              <div className="inline-block px-3 py-1 rounded bg-amber-400 text-black text-xs font-sans font-bold uppercase tracking-wider">
+              <div className="inline-block px-3 py-1 rounded bg-amber-400 text-black text-xs font-sans font-bold uppercase tracking-wider shadow-sm">
                 {featuredProject.type}
               </div>
-              <h3 className="text-2xl sm:text-3xl font-serif font-bold text-white">
+              <h3 className="text-2xl sm:text-4xl font-serif font-bold text-white drop-shadow-md">
                 {featuredProject.title}
               </h3>
-              <p className="text-xs sm:text-sm font-sans text-stone-300 max-w-2xl line-clamp-2">
+              <p className="text-xs sm:text-sm font-sans text-stone-200 max-w-2xl line-clamp-2 drop-shadow">
                 {featuredProject.description}
               </p>
               {onOpenApp && (
                 <button
                   onClick={() => onOpenApp('project', { projectId: featuredProject.id })}
-                  className="mt-2 px-4 py-2 bg-white hover:bg-stone-200 text-black text-xs font-sans font-bold uppercase tracking-wider transition-all cursor-pointer inline-flex items-center space-x-1.5"
+                  className="mt-2 px-4 py-2 bg-white hover:bg-stone-200 text-black text-xs font-sans font-bold uppercase tracking-wider transition-all cursor-pointer inline-flex items-center space-x-1.5 shadow-md"
                 >
                   <span>Inspect Project Specs</span>
                   <ExternalLink size={12} />
@@ -210,7 +210,7 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
         </div>
       </div>
 
-      {/* 4. MORE WORK SECTION (4 Square Project Cards Grid) */}
+      {/* 4. MORE WORK SECTION (Rectangular 16:9 Project Cards Grid with Enhanced Dark Backdrop Glow) */}
       <div className="py-20 px-6 sm:px-12 max-w-6xl mx-auto space-y-10 text-center border-t border-stone-300">
         <h2 className="text-3xl sm:text-4xl font-serif font-bold tracking-widest uppercase text-stone-900">
           MORE WORK
@@ -221,23 +221,24 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
             <div
               key={proj.id}
               onClick={() => onOpenApp && onOpenApp('project', { projectId: proj.id })}
-              className="group relative aspect-square bg-stone-900 rounded-lg overflow-hidden shadow-xl border border-stone-800 cursor-pointer transition-transform duration-500 hover:-translate-y-1.5"
+              className="group relative aspect-video bg-stone-950 rounded-xl overflow-hidden shadow-xl border border-stone-800 cursor-pointer transition-all duration-500 hover:-translate-y-1.5 hover:shadow-2xl"
             >
               <img
                 src={proj.imageUrl || '/assets/payflow_thumbnail.png'}
                 alt={proj.title}
-                className="w-full h-full object-cover opacity-75 group-hover:opacity-40 group-hover:scale-110 transition duration-700"
+                className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
               />
-              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/70 transition duration-300 flex flex-col items-center justify-center p-6 text-center text-white space-y-2">
-                <h3 className="text-lg font-serif font-bold tracking-widest uppercase">
+              {/* Rich Bottom Dark Gradient Glow for Text Highlighting */}
+              <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/80 to-transparent group-hover:from-stone-950 group-hover:via-stone-950/90 transition duration-300 flex flex-col justify-end p-4 text-left text-white space-y-1.5 z-10">
+                <span className="inline-block px-2 py-0.5 rounded bg-amber-400/90 text-black text-[9px] font-sans font-bold uppercase tracking-wider w-fit">
+                  {proj.type}
+                </span>
+                <h3 className="text-base font-serif font-bold tracking-wider uppercase text-white drop-shadow">
                   {proj.title}
                 </h3>
-                <p className="text-[11px] font-sans text-stone-300 uppercase tracking-wider">
-                  {proj.type}
-                </p>
-                <div className="pt-2 opacity-0 group-hover:opacity-100 transition duration-300 text-xs font-sans text-amber-300 underline flex items-center space-x-1">
+                <div className="opacity-0 group-hover:opacity-100 transition duration-300 text-[11px] font-sans text-amber-300 underline flex items-center space-x-1">
                   <span>View Details</span>
-                  <ExternalLink size={12} />
+                  <ExternalLink size={11} />
                 </div>
               </div>
             </div>
@@ -245,7 +246,7 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
         </div>
       </div>
 
-      {/* 5. GET IN TOUCH! SECTION (Ally Doederlein Style Contact Box) */}
+      {/* 5. GET IN TOUCH! SECTION */}
       <div className="py-20 px-6 sm:px-12 max-w-5xl mx-auto border-t border-stone-300 space-y-12">
         {/* Giant Black Outlined Header Box */}
         <div className="border-4 border-stone-950 bg-[#E5D8F0] p-6 sm:p-8 text-center shadow-lg">
