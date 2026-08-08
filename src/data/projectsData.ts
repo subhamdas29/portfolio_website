@@ -2,75 +2,79 @@ import { Project } from '../types';
 
 export const projectsData: Project[] = [
   {
-    id: 'payflow',
-    title: 'PayFlow',
-    subtitle: 'Full-Stack Financial Management App',
-    type: 'Personal',
-    period: 'Apr. 2026 - May 2026',
-    techStack: ['React.js', 'Node.js', 'Express.js', 'TypeScript', 'Tailwind CSS', 'PostgreSQL', 'Prisma ORM', 'Socket.io'],
-    githubUrl: 'https://github.com/subhamdas29/Financial_management_app',
-    liveUrl: 'https://payflow-app.vercel.app',
-    icon: 'CreditCard',
-    imageUrl: '/assets/payflow_thumbnail.png',
-    highlights: [
-      'Implemented JWT authentication with access/refresh token rotation, bcrypt password hashing, Zod input validation, and role-based route protection across 29 API endpoints.',
-      'Designed a folder-based expense tracking system with monthly budget limits, real-time over-budget alerts, and per-category spending analytics using Prisma ORM and PostgreSQL.',
-      'Built atomic account-to-account transfers using Prisma $transaction ensuring data consistency, and integrated Socket.IO for real-time transaction notifications with authenticated per-user private rooms.'
-    ],
-    description: `PayFlow is a production-grade full-stack financial application built for modern expense tracking, category budget allocations, and secure peer-to-peer money transfers. Designed with zero-trust security using JWT token rotation and Prisma transaction safety.`
-  },
-  {
     id: 'resumepilot',
     title: 'ResumePilot',
-    subtitle: 'ATS Score & Suggestions Tool (FYP 2026)',
+    subtitle: 'AI-Powered ATS Score & Resume Optimization Platform (FYP 2026)',
     type: 'FYP',
     period: 'Dec. 2025 - Jul. 2026',
-    techStack: ['FastAPI', 'Python', 'spaCy', 'HuggingFace', 'Groq API', 'PostgreSQL', 'Supabase', 'asyncio'],
+    techStack: ['FastAPI', 'Python', 'spaCy NLP', 'Groq LLaMA 3.3 70B', 'HuggingFace', 'PostgreSQL', 'Supabase', 'GitHub API', 'Adzuna API', 'React.js'],
     githubUrl: 'https://github.com/subhamdas29/ATS_resume_matcher',
     liveUrl: 'https://resumepilot-ai.vercel.app',
     icon: 'Bot',
     imageUrl: '/assets/resumepilot_thumbnail.png',
     highlights: [
-      'Transitioned synchronous operations into an asynchronous workflow with httpx and asyncio.gather, reducing API response latency by 60%.',
-      'Engineered a two-layer NLP extraction pipeline using spaCy, a custom Entity Ruler, and a trained NER model alongside structured Groq API prompts.',
-      'Weighted ATS scoring formula combining keyword match, semantic similarity with HuggingFace embeddings, section completeness, and GitHub REST API presence.'
+      'Weighted 6-Signal ATS Formula: Blends Section Quality (28%), Hard Skill Match (35%), Semantic Similarity (15%), Soft Skills (7%), Job Title Match (5%), and active GitHub contribution score (10%).',
+      'Deterministic Local NLP Pipeline: Two-layer extraction featuring spaCy Entity Ruler with 379 patterns and a custom-trained NER model for skill, title, education, and certification parsing.',
+      'Groq LLaMA 3.3 70B & HuggingFace Embeddings: Computes section improvement suggestions via Groq API while evaluating document semantic similarity with all-MiniLM-L6-v2.',
+      'Live Adzuna Job Search & Supabase History: Surfaces matching live open roles post-analysis with salary and apply links, while storing user analysis history in Supabase PostgreSQL.'
     ],
-    description: `ResumePilot is an AI-driven Resume Analysis & ATS Optimization tool designed as a final year project under Dr. Syamal Patra. It extracts structured entities from uploaded resumes, computes semantic alignment with targeted job descriptions, and fetches live open roles via the Adzuna API.`
+    description: `ResumePilot is a smart ATS (Applicant Tracking System) platform that scans resumes against job descriptions. It calculates a weighted ATS score using local spaCy NLP entity extraction, HuggingFace semantic embeddings, Groq LLaMA 3.3 LLM analysis, GitHub profile commit scanning, and surfaces matching live job openings via the Adzuna API.`
   },
   {
-    id: 'chessplus',
-    title: 'Chess++',
-    subtitle: 'Open-Source Real-Time Chess Engine & Multiplayer',
-    type: 'Open-Source',
-    period: 'Jan. 2026 - Mar. 2026',
-    techStack: ['TypeScript', 'React.js', 'Node.js', 'WebSocket', 'Chess.js', 'Stockfish WASM', 'Tailwind CSS'],
-    githubUrl: 'https://github.com/subhamdas29/ATS_resume_matcher',
-    liveUrl: 'https://chess-plus.vercel.app',
-    icon: 'Trophy',
-    imageUrl: '/assets/chessplus_thumbnail.png',
+    id: 'payflow',
+    title: 'PayFlow',
+    subtitle: 'Full-Stack Financial Management & Real-Time Banking Platform',
+    type: 'Personal',
+    period: 'Apr. 2026 - May 2026',
+    techStack: ['React 18', 'Node.js 20', 'Express.js', 'TypeScript 5', 'PostgreSQL 16', 'Prisma ORM 5', 'Socket.IO', 'Zustand', 'Zod', 'Tailwind CSS v3'],
+    githubUrl: 'https://github.com/subhamdas29/Financial_management_app',
+    liveUrl: 'https://payflow-app.vercel.app',
+    icon: 'CreditCard',
+    imageUrl: '/assets/payflow_thumbnail.png',
     highlights: [
-      'Engineered a lightweight real-time multiplayer chess arena with WebSocket room matchmaking and low-latency move broadcasting.',
-      'Integrated Stockfish 16 WebAssembly engine in a dedicated Web Worker to evaluate move recommendations, centipawn score graphs, and blunder detection locally.',
-      'Built interactive PGN notation viewer, move timeline playback, and customized board themes with full accessibility keyboard control.'
+      'Atomic Account Transfers (Prisma $transaction): Prevents partial financial updates by executing user-to-user transfers in atomic database transactions with automatic rollback on failure.',
+      'Folder-Based Expense & Budget System: Create income/expense category folders with monthly budget limits, visual progress bars, over-budget alerts, and per-folder analytics.',
+      'Socket.IO Real-Time Notifications: Authenticated WebSocket connections delivering instant transaction alerts and account updates into per-user private rooms.',
+      'Zero-Trust JWT Auth & Multi-Account Management: Double-token JWT rotation (access + refresh), bcrypt password hashing (12 rounds), Zod input validation, and multi-account balance tracking.'
     ],
-    description: `Chess++ is an open-source web-based chess workspace combining live multiplayer games with local Stockfish WASM analysis. Features real-time move validation, accuracy score graphs, and interactive puzzle trainers.`
+    description: `PayFlow is a full-stack personal finance application enabling multi-account management, folder-based expense allocations, real-time peer-to-peer transfers, and live transaction notifications. Engineered with zero-trust JWT security, Prisma database transaction guarantees, and Socket.IO private events.`
   },
   {
     id: 'foodrush',
     title: 'FoodRush',
-    subtitle: 'On-Demand Food Ordering & Live Delivery Platform',
+    subtitle: 'Event-Driven Distributed Microservices & Order Saga Platform',
     type: 'Personal',
     period: 'Sep. 2025 - Nov. 2025',
-    techStack: ['React.js', 'TypeScript', 'Node.js', 'Express.js', 'MongoDB', 'Mapbox GL', 'Stripe API'],
+    techStack: ['React 18', 'Node.js 20', 'TypeScript 5.4', 'Apache Kafka', 'PostgreSQL 16', 'Prisma ORM', 'Turborepo', 'Docker Compose', 'Zustand'],
     githubUrl: 'https://github.com/subhamdas29/Financial_management_app',
     liveUrl: 'https://foodrush.vercel.app',
     icon: 'ShoppingBag',
     imageUrl: '/assets/foodrush_thumbnail.png',
     highlights: [
-      'Developed a responsive food ordering interface featuring restaurant menu customization, cart persistence, and instant search filtering.',
-      'Integrated Mapbox GL SDK for interactive real-time courier movement simulation and estimated time of arrival (ETA) calculations.',
-      'Configured Stripe payment gateway integration with Webhook handlers for order status updates and automated email invoice receipts.'
+      'Distributed Saga Orchestration: Centralized state machine managing multi-step orders across services with automated backward compensation (refunds & cancellations) on step failure.',
+      'Kafka-Driven Microservices Architecture: Decoupled messaging across API Gateway, Order Orchestrator, Payment Service, Restaurant Service, and Delivery Service using Apache Kafka.',
+      'Database-per-Service Isolation: Each domain microservice manages its own isolated PostgreSQL database schema with Prisma ORM migrations.',
+      'Containerized Monorepo Infrastructure: Monorepo managed by Turborepo & PNPM Workspaces, containerized with Docker Compose for Kafka brokers, Zookeeper, and PostgreSQL.'
     ],
-    description: `FoodRush is a full-featured online food ordering platform offering dynamic restaurant catalog browsing, cart checkout with Stripe, live delivery tracking maps, and order history analytics.`
+    description: `FoodRush is an event-driven microservices food delivery platform built with Node.js, TypeScript, Apache Kafka, PostgreSQL, and React. It implements the Saga Pattern (Orchestration) across Order Orchestrator, Payment, Restaurant, and Delivery microservices with automated failure rollback and compensation.`
+  },
+  {
+    id: 'chessplus',
+    title: 'Chess++',
+    subtitle: 'Strategic Chess Engine Variant & Teleportation Arena',
+    type: 'Open-Source',
+    period: 'Jan. 2026 - Mar. 2026',
+    techStack: ['TypeScript', 'React.js', 'Node.js', 'WebSocket', 'Chess.js', 'Stockfish 16 WASM', 'Tailwind CSS'],
+    githubUrl: 'https://github.com/subhamdas29/ATS_resume_matcher',
+    liveUrl: 'https://chess-plus.vercel.app',
+    icon: 'Trophy',
+    imageUrl: '/assets/chessplus_thumbnail.png',
+    highlights: [
+      'Innovative Catapult Teleportation Mechanics: Introduces Catapult pieces on b1/f1 (White) and b8/f8 (Black) that enable non-pawn pieces to teleport across the board in a single turn.',
+      'Real-Time WebSocket Matchmaking: Built a low-latency WebSocket multiplayer arena with dedicated game rooms, move broadcasting, and fault-tolerant reconnect handling.',
+      'Local Stockfish WASM Analysis: Integrated Stockfish 16 WebAssembly engine in Web Workers to compute live centipawn graphs, blunder detection, and move recommendations.',
+      'Draw-Reduction Strategy Design: Eliminates stale opening theory and fortress draws by introducing sudden teleportation attacks and king evacuation tactics.'
+    ],
+    description: `Chess++ is an innovative chess variant designed to reduce high draw rates and break rigid engine prep by introducing a strategic new piece — the Catapult. Supports real-time WebSocket multiplayer, Stockfish WASM move evaluations, and teleportation-based tactics.`
   }
 ];
