@@ -11,6 +11,7 @@ export const projectsData: Project[] = [
     githubUrl: 'https://github.com/subhamdas29/Financial_management_app',
     liveUrl: 'https://payflow-app.vercel.app',
     icon: 'CreditCard',
+    imageUrl: '/assets/payflow_thumbnail.png',
     highlights: [
       'Implemented JWT authentication with access/refresh token rotation, bcrypt password hashing, Zod input validation, and role-based route protection across 29 API endpoints.',
       'Designed a folder-based expense tracking system with monthly budget limits, real-time over-budget alerts, and per-category spending analytics using Prisma ORM and PostgreSQL.',
@@ -28,6 +29,7 @@ export const projectsData: Project[] = [
     githubUrl: 'https://github.com/subhamdas29/ATS_resume_matcher',
     liveUrl: 'https://resumepilot-ai.vercel.app',
     icon: 'Bot',
+    imageUrl: '/assets/resumepilot_thumbnail.png',
     highlights: [
       'Transitioned synchronous operations into an asynchronous workflow with httpx and asyncio.gather, reducing API response latency by 60%.',
       'Engineered a two-layer NLP extraction pipeline using spaCy, a custom Entity Ruler, and a trained NER model alongside structured Groq API prompts.',
@@ -45,6 +47,7 @@ export const projectsData: Project[] = [
     githubUrl: 'https://github.com/subhamdas29/ATS_resume_matcher',
     liveUrl: 'https://chess-plus.vercel.app',
     icon: 'Trophy',
+    imageUrl: '/assets/chessplus_thumbnail.png',
     highlights: [
       'Engineered a lightweight real-time multiplayer chess arena with WebSocket room matchmaking and low-latency move broadcasting.',
       'Integrated Stockfish 16 WebAssembly engine in a dedicated Web Worker to evaluate move recommendations, centipawn score graphs, and blunder detection locally.',
@@ -62,6 +65,7 @@ export const projectsData: Project[] = [
     githubUrl: 'https://github.com/subhamdas29/Financial_management_app',
     liveUrl: 'https://foodrush.vercel.app',
     icon: 'ShoppingBag',
+    imageUrl: '/assets/foodrush_thumbnail.png',
     highlights: [
       'Developed a responsive food ordering interface featuring restaurant menu customization, cart persistence, and instant search filtering.',
       'Integrated Mapbox GL SDK for interactive real-time courier movement simulation and estimated time of arrival (ETA) calculations.',

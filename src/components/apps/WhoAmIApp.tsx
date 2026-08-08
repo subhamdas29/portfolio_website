@@ -51,7 +51,7 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
     if (onOpenApp) {
       onOpenApp('resume_viewer');
     } else {
-      window.open('/assets/resume_subham.png', '_blank');
+      window.open('/assets/resume_subham.jpg', '_blank');
     }
   };
 
@@ -162,15 +162,9 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
             {/* Project Image & Details */}
             <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-transparent to-black/30 z-10" />
             <img
-              src={
-                featuredProject.id === 'payflow'
-                  ? '/assets/Wallpapers/5957646.png'
-                  : featuredProject.id === 'resumepilot'
-                  ? '/assets/Wallpapers/tanjiro-kamado-6082x5416-23027.jpg'
-                  : '/assets/Wallpapers/lunar.jpg'
-              }
+              src={featuredProject.imageUrl || '/assets/payflow_thumbnail.png'}
               alt={featuredProject.title}
-              className="w-full h-full object-cover object-center transform transition duration-700 hover:scale-105 opacity-80"
+              className="w-full h-full object-cover object-center transform transition duration-700 hover:scale-105 opacity-90"
             />
 
             {/* Navigation Left Arrow */}
@@ -230,19 +224,11 @@ export const WhoAmIApp: React.FC<WhoAmIAppProps> = ({ onOpenApp, onMaximize, isM
               className="group relative aspect-square bg-stone-900 rounded-lg overflow-hidden shadow-xl border border-stone-800 cursor-pointer transition-transform duration-500 hover:-translate-y-1.5"
             >
               <img
-                src={
-                  proj.id === 'payflow'
-                    ? '/assets/Wallpapers/5957646.png'
-                    : proj.id === 'resumepilot'
-                    ? '/assets/Wallpapers/tanjiro-kamado-6082x5416-23027.jpg'
-                    : proj.id === 'codearena'
-                    ? '/assets/Wallpapers/660523.jpg'
-                    : '/assets/Wallpapers/dandelion.jpg'
-                }
+                src={proj.imageUrl || '/assets/payflow_thumbnail.png'}
                 alt={proj.title}
-                className="w-full h-full object-cover opacity-60 group-hover:opacity-40 group-hover:scale-110 transition duration-700"
+                className="w-full h-full object-cover opacity-75 group-hover:opacity-40 group-hover:scale-110 transition duration-700"
               />
-              <div className="absolute inset-0 bg-black/50 group-hover:bg-black/70 transition duration-300 flex flex-col items-center justify-center p-6 text-center text-white space-y-2">
+              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/70 transition duration-300 flex flex-col items-center justify-center p-6 text-center text-white space-y-2">
                 <h3 className="text-lg font-serif font-bold tracking-widest uppercase">
                   {proj.title}
                 </h3>

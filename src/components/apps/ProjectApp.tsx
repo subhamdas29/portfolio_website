@@ -88,7 +88,7 @@ export const ProjectApp: React.FC<ProjectAppProps> = ({ projectId = 'payflow', o
         ))}
       </div>
 
-      {/* Main Selected Project Showcase Card (Ally Doederlein Style) */}
+      {/* Main Selected Project Showcase Card */}
       <div className="rounded-3xl bg-gradient-to-br from-[#1E1E1E] via-[#1A1A1A] to-[#121212] border border-stone-800 p-6 sm:p-10 space-y-6 shadow-2xl relative overflow-hidden">
         <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -137,6 +137,17 @@ export const ProjectApp: React.FC<ProjectAppProps> = ({ projectId = 'payflow', o
             )}
           </div>
         </div>
+
+        {/* Project Thumbnail Image Banner */}
+        {project.imageUrl && (
+          <div className="relative z-10 w-full rounded-2xl overflow-hidden border border-stone-800 max-h-80 shadow-2xl bg-black">
+            <img
+              src={project.imageUrl}
+              alt={project.title}
+              className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+        )}
 
         {/* Project Description */}
         <div className="relative z-10 space-y-2">

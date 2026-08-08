@@ -39,6 +39,7 @@ export interface Project {
   highlights: string[];
   description: string;
   icon: string;
+  imageUrl?: string;
 }
 
 export interface TerminalHistory {
