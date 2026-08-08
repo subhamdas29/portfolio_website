@@ -44,9 +44,9 @@ export const TerminalApp: React.FC<TerminalAppProps> = ({ onOpenApp, onOpenHelp,
           <div className="flex flex-wrap gap-2 text-[11px] text-stone-400 font-mono mt-1">
             <span>Files available:</span>
             <span className="text-amber-300">resume</span>
-            <span className="text-amber-300">projects.md</span>
-            <span className="text-amber-300">skills.txt</span>
-            <span className="text-amber-300">contact.txt</span>
+            <span className="text-amber-300">projects</span>
+            <span className="text-amber-300">skills</span>
+            <span className="text-amber-300">contact</span>
           </div>
         </div>
       ),
@@ -94,7 +94,7 @@ export const TerminalApp: React.FC<TerminalAppProps> = ({ onOpenApp, onOpenHelp,
               </div>
               <div>
                 <span className="text-terminal-green font-bold">cat &lt;file&gt;</span>
-                <span className="text-stone-300"> - View file content (e.g. cat resume or cat projects.md)</span>
+                <span className="text-stone-300"> - View file content (e.g. cat resume or cat projects)</span>
               </div>
               <div>
                 <span className="text-terminal-green font-bold">open &lt;app&gt;</span>
@@ -174,10 +174,10 @@ export const TerminalApp: React.FC<TerminalAppProps> = ({ onOpenApp, onOpenHelp,
         outputContent = (
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono my-1">
             <span className="text-amber-300">resume</span>
-            <span className="text-amber-300">projects.md</span>
-            <span className="text-amber-300">skills.txt</span>
-            <span className="text-amber-300">contact.txt</span>
-            <span className="text-cyan-400 font-bold">personalpic.jpeg</span>
+            <span className="text-amber-300">projects</span>
+            <span className="text-amber-300">skills</span>
+            <span className="text-amber-300">contact</span>
+            <span className="text-cyan-400 font-bold">personalpic</span>
           </div>
         );
         break;
@@ -186,9 +186,9 @@ export const TerminalApp: React.FC<TerminalAppProps> = ({ onOpenApp, onOpenHelp,
         const filename = args[0]?.toLowerCase();
         if (!filename) {
           entryType = 'error';
-          outputContent = <div className="text-red-400">cat: missing filename argument. Usage: cat resume</div>;
-        } else if (filename === 'resume' || filename === 'resume.txt') {
-          onOpenApp('whoami');
+          outputContent = <div className="text-red-400">cat: missing filename argument. Usage: cat resume or cat projects</div>;
+        } else if (['resume', 'resume.txt', 'resume.jpg'].includes(filename)) {
+          onOpenApp('resume_viewer');
           outputContent = (
             <div className="p-3 rounded bg-black/50 border border-white/10 text-xs font-mono text-stone-200 whitespace-pre-wrap leading-relaxed">
               {`=============================================================
@@ -223,16 +223,16 @@ HONORS & ACHIEVEMENTS:
 - Winner of 64squares '25 Chess Tournament`}
             </div>
           );
-        } else if (filename === 'projects.md' || filename === 'project' || filename === 'projects' || filename === 'project.md') {
+        } else if (['projects', 'projects.md', 'project', 'project.md'].includes(filename)) {
           onOpenApp('project', { projectId: 'payflow' });
           outputContent = (
             <div className="p-3 rounded bg-black/50 border border-white/10 text-xs font-mono text-stone-200 whitespace-pre-wrap leading-relaxed">
               {projectsMdText}
             </div>
           );
-        } else if (filename === 'skills.txt') {
+        } else if (['skills', 'skills.txt'].includes(filename)) {
           outputContent = (
-            <div className="p-3 rounded bg-black/50 border border-white/10 text-xs font-mono text-terminal-green">
+            <div className="p-3 rounded bg-black/50 border border-white/10 text-xs font-mono text-terminal-green space-y-1">
               <div>Languages: TypeScript, JavaScript, Python, SQL</div>
               <div>Frontend: React.js, Tailwind CSS, HTML5, CSS3, Vite</div>
               <div>Backend & DevOps: Node.js, Express.js, FastAPI, Docker, CI/CD, Git</div>
@@ -240,9 +240,9 @@ HONORS & ACHIEVEMENTS:
               <div>Database: PostgreSQL, Supabase, Prisma ORM</div>
             </div>
           );
-        } else if (filename === 'contact.txt') {
+        } else if (['contact', 'contact.txt'].includes(filename)) {
           outputContent = (
-            <div className="p-3 rounded bg-black/50 border border-white/10 text-xs font-mono text-amber-300">
+            <div className="p-3 rounded bg-black/50 border border-white/10 text-xs font-mono text-amber-300 space-y-1">
               <div>Email: subhamdas5477@gmail.com</div>
               <div>Phone: +91 8582953151</div>
               <div>GitHub: https://github.com/subhamdas29</div>
@@ -251,7 +251,7 @@ HONORS & ACHIEVEMENTS:
           );
         } else {
           entryType = 'error';
-          outputContent = <div className="text-red-400">cat: {filename}: No such file or directory. Try: cat resume</div>;
+          outputContent = <div className="text-red-400">cat: {filename}: No such file or directory. Try: cat resume or cat projects</div>;
         }
         break;
 
@@ -263,9 +263,12 @@ HONORS & ACHIEVEMENTS:
         } else if (['payflow', 'resumepilot', 'chessplus', 'foodrush'].includes(targetApp)) {
           onOpenApp('project', { projectId: targetApp });
           outputContent = <div className="text-terminal-green">Launching {targetApp} project GUI...</div>;
-        } else if (targetApp === 'whoami' || targetApp === 'bio' || targetApp === 'resume') {
+        } else if (targetApp === 'whoami' || targetApp === 'bio') {
           onOpenApp('whoami');
           outputContent = <div className="text-terminal-green">Launching WhoAmI bio window...</div>;
+        } else if (targetApp === 'resume') {
+          onOpenApp('resume_viewer');
+          outputContent = <div className="text-terminal-green">Launching Resume Viewer window...</div>;
         } else if (targetApp === 'github') {
           window.open(resumeData.github, '_blank');
           outputContent = <div className="text-terminal-green">Opening GitHub in new browser tab...</div>;
