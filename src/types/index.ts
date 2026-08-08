@@ -27,6 +27,12 @@ export interface AppWindow {
   contentProps?: Record<string, any>;
 }
 
+export interface ApiEndpointSpec {
+  method: string;
+  endpoint: string;
+  description: string;
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -40,6 +46,10 @@ export interface Project {
   description: string;
   icon: string;
   imageUrl?: string;
+  architectureFlow?: string[];
+  apiEndpoints?: ApiEndpointSpec[];
+  dbSchema?: string[];
+  extraFeatures?: string[];
 }
 
 export interface TerminalHistory {

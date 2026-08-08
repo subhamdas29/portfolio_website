@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { projectsData } from '../../data/projectsData';
 import { Project } from '../../types';
-import { Github, ExternalLink, Code2, CheckCircle2, ShieldCheck, Zap } from 'lucide-react';
+import { Github, ExternalLink, Code2, CheckCircle2, ShieldCheck, Zap, GitFork, Server, Database, Sparkles } from 'lucide-react';
 
 interface ProjectAppProps {
   projectId?: string;
@@ -21,7 +21,7 @@ export const ProjectApp: React.FC<ProjectAppProps> = ({ projectId = 'payflow' })
           PROJECT ARCHITECTURES
         </h1>
         <p className="text-xs sm:text-sm font-sans tracking-wider text-stone-300 uppercase mt-2">
-          Technical Specifications & Engineering Deep Dive
+          Comprehensive Technical Specifications, System Workflows & API References
         </p>
       </div>
 
@@ -46,7 +46,7 @@ export const ProjectApp: React.FC<ProjectAppProps> = ({ projectId = 'payflow' })
       </div>
 
       {/* Main Selected Project Editorial Card */}
-      <div className="border-4 border-stone-950 bg-white p-6 sm:p-10 space-y-8 shadow-2xl">
+      <div className="border-4 border-stone-950 bg-white p-6 sm:p-10 space-y-10 shadow-2xl">
         {/* Project Header Row */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b-2 border-stone-950 pb-6">
           <div className="space-y-2">
@@ -92,7 +92,7 @@ export const ProjectApp: React.FC<ProjectAppProps> = ({ projectId = 'payflow' })
 
         {/* Project Thumbnail Image Banner */}
         {project.imageUrl && (
-          <div className="w-full rounded-lg overflow-hidden border-4 border-stone-950 bg-stone-950 shadow-xl max-h-[420px]">
+          <div className="w-full rounded-lg overflow-hidden border-4 border-stone-950 bg-stone-950 shadow-xl max-h-[440px]">
             <img
               src={project.imageUrl}
               alt={project.title}
@@ -101,7 +101,7 @@ export const ProjectApp: React.FC<ProjectAppProps> = ({ projectId = 'payflow' })
           </div>
         )}
 
-        {/* Project Overview */}
+        {/* 1. Project Overview */}
         <div className="space-y-3">
           <h3 className="text-xl font-serif font-bold uppercase tracking-wider text-stone-950">
             PROJECT OVERVIEW
@@ -111,11 +111,11 @@ export const ProjectApp: React.FC<ProjectAppProps> = ({ projectId = 'payflow' })
           </p>
         </div>
 
-        {/* Technologies & Architecture Matrix */}
+        {/* 2. Technologies & Architecture Matrix */}
         <div className="space-y-4 pt-4 border-t-2 border-stone-950">
           <h3 className="text-xl font-serif font-bold uppercase tracking-wider text-stone-950 flex items-center space-x-2">
             <Code2 size={20} />
-            <span>TECHNOLOGIES & ARCHITECTURE</span>
+            <span>TECHNOLOGIES & ARCHITECTURE STACK</span>
           </h3>
           <div className="flex flex-wrap gap-2.5">
             {project.techStack.map((tech) => (
@@ -129,7 +129,7 @@ export const ProjectApp: React.FC<ProjectAppProps> = ({ projectId = 'payflow' })
           </div>
         </div>
 
-        {/* Key Engineering Highlights */}
+        {/* 3. Key Engineering Highlights */}
         <div className="space-y-4 pt-4 border-t-2 border-stone-950">
           <h3 className="text-xl font-serif font-bold uppercase tracking-wider text-stone-950 flex items-center space-x-2">
             <ShieldCheck size={20} />
@@ -153,6 +153,104 @@ export const ProjectApp: React.FC<ProjectAppProps> = ({ projectId = 'payflow' })
             ))}
           </div>
         </div>
+
+        {/* 4. System Architecture & Workflow Pipeline */}
+        {project.architectureFlow && (
+          <div className="space-y-4 pt-4 border-t-2 border-stone-950">
+            <h3 className="text-xl font-serif font-bold uppercase tracking-wider text-stone-950 flex items-center space-x-2">
+              <GitFork size={20} />
+              <span>SYSTEM ARCHITECTURE & EVENT WORKFLOW</span>
+            </h3>
+
+            <div className="p-6 border-2 border-stone-950 bg-stone-950 text-white space-y-3 shadow-lg">
+              {project.architectureFlow.map((step, idx) => (
+                <div key={idx} className="text-xs sm:text-sm font-mono leading-relaxed text-stone-200 flex items-start space-x-3">
+                  <span className="text-emerald-400 font-bold shrink-0">➜</span>
+                  <span>{step}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* 5. API Reference & Service Endpoints Table */}
+        {project.apiEndpoints && (
+          <div className="space-y-4 pt-4 border-t-2 border-stone-950">
+            <h3 className="text-xl font-serif font-bold uppercase tracking-wider text-stone-950 flex items-center space-x-2">
+              <Server size={20} />
+              <span>API REFERENCE & SERVICE ENDPOINTS</span>
+            </h3>
+
+            <div className="overflow-x-auto border-2 border-stone-950 shadow-md">
+              <table className="w-full text-left font-mono text-xs">
+                <thead className="bg-stone-950 text-white uppercase text-[11px] font-bold border-b-2 border-stone-950">
+                  <tr>
+                    <th className="p-3.5 border-r border-stone-800">Method</th>
+                    <th className="p-3.5 border-r border-stone-800">Endpoint</th>
+                    <th className="p-3.5">Description</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-stone-300 bg-white">
+                  {project.apiEndpoints.map((ep, idx) => (
+                    <tr key={idx} className="hover:bg-stone-100 transition">
+                      <td className="p-3.5 font-bold border-r border-stone-300">
+                        <span className={`px-2 py-0.5 rounded text-[10px] uppercase ${
+                          ep.method === 'POST' ? 'bg-stone-950 text-white' : ep.method === 'GET' ? 'bg-stone-200 text-stone-950 border border-stone-400' : 'bg-black text-amber-300'
+                        }`}>
+                          {ep.method}
+                        </span>
+                      </td>
+                      <td className="p-3.5 font-bold text-stone-950 border-r border-stone-300 whitespace-nowrap">
+                        {ep.endpoint}
+                      </td>
+                      <td className="p-3.5 font-sans text-xs text-stone-800 leading-relaxed">
+                        {ep.description}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* 6. Database Schema & Data Models */}
+        {project.dbSchema && (
+          <div className="space-y-4 pt-4 border-t-2 border-stone-950">
+            <h3 className="text-xl font-serif font-bold uppercase tracking-wider text-stone-950 flex items-center space-x-2">
+              <Database size={20} />
+              <span>DATABASE SCHEMA & DOMAIN ISOLATION</span>
+            </h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {project.dbSchema.map((schemaItem, idx) => (
+                <div key={idx} className="p-4 border-2 border-stone-950 bg-white text-stone-950 font-mono text-xs shadow-sm">
+                  <span className="font-bold text-stone-950 block mb-1">● Schema Entity #{idx + 1}</span>
+                  <p className="text-stone-800 text-[11px] leading-relaxed">{schemaItem}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* 7. Extra Features / Game Mechanics */}
+        {project.extraFeatures && (
+          <div className="space-y-4 pt-4 border-t-2 border-stone-950">
+            <h3 className="text-xl font-serif font-bold uppercase tracking-wider text-stone-950 flex items-center space-x-2">
+              <Sparkles size={20} />
+              <span>ADDITIONAL TECHNICAL SPECIFICATIONS</span>
+            </h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {project.extraFeatures.map((feat, idx) => (
+                <div key={idx} className="p-4 border-2 border-stone-950 bg-stone-950 text-white space-y-1 shadow-sm">
+                  <span className="font-sans font-bold text-xs uppercase text-amber-300 block">Feature Spec #{idx + 1}</span>
+                  <p className="font-serif text-xs leading-relaxed text-stone-200">{feat}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
