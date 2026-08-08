@@ -214,7 +214,7 @@ export const MessagesApp: React.FC<MessagesAppProps> = ({
               className="w-9 h-9 rounded-xl bg-[#007AFF] hover:bg-blue-600 active:scale-95 disabled:opacity-40 disabled:hover:bg-[#007AFF] text-white flex items-center justify-center transition-all cursor-pointer shrink-0 shadow-sm"
               title="Send Comment"
             >
-              <Send className="w-4 h-4 translate-x-0.5" />
+              <Send className="w-4 h-4" />
             </button>
           </form>
         ) : (
