@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { projectsData } from '../../data/projectsData';
 import { Project } from '../../types';
-import { Github, ExternalLink, Code2, CheckCircle2, ShieldCheck, Zap, GitFork, Server, Database, Sparkles } from 'lucide-react';
+import { Github, ExternalLink, Code2, CheckCircle2, ShieldCheck, GitFork, Server, Database, Sparkles } from 'lucide-react';
 
 interface ProjectAppProps {
   projectId?: string;
@@ -61,29 +61,17 @@ export const ProjectApp: React.FC<ProjectAppProps> = ({ projectId = 'payflow' })
             </p>
           </div>
 
-          {/* Action Link Buttons */}
-          <div className="flex items-center space-x-3 flex-wrap gap-2">
+          {/* Action Link Buttons (GitHub Source Only) */}
+          <div className="flex items-center space-x-3 shrink-0">
             {project.githubUrl && (
               <a
                 href={project.githubUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="px-5 py-2.5 bg-stone-950 hover:bg-stone-800 text-white text-xs font-sans font-bold uppercase tracking-widest transition-all shadow-md inline-flex items-center space-x-2 cursor-pointer"
+                className="px-6 py-3 bg-stone-950 hover:bg-stone-800 text-white text-xs font-sans font-bold uppercase tracking-widest transition-all shadow-md inline-flex items-center space-x-2 cursor-pointer"
               >
-                <Github size={15} />
+                <Github size={16} />
                 <span>GitHub Source</span>
-                <ExternalLink size={12} />
-              </a>
-            )}
-            {project.liveUrl && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="px-5 py-2.5 bg-white border-2 border-stone-950 hover:bg-stone-100 text-stone-950 text-xs font-sans font-bold uppercase tracking-widest transition-all shadow-md inline-flex items-center space-x-2 cursor-pointer"
-              >
-                <Zap size={15} />
-                <span>Live Application</span>
                 <ExternalLink size={12} />
               </a>
             )}
