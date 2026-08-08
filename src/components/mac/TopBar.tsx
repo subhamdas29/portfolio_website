@@ -1,5 +1,4 @@
 import React from 'react';
-import { Apple } from 'lucide-react';
 
 interface TopBarProps {
   activeAppTitle?: string;
@@ -30,9 +29,8 @@ export const TopBar: React.FC<TopBarProps> = ({
       <div className="flex items-center space-x-1 sm:space-x-2">
         <button 
           onClick={() => onOpenApp('whoami')}
-          className="flex items-center space-x-1 px-2 py-0.5 rounded hover:bg-white/10 transition-colors font-semibold text-white cursor-pointer"
+          className="flex items-center px-2 py-0.5 rounded hover:bg-white/10 transition-colors font-semibold text-white cursor-pointer"
         >
-          <Apple className="w-3.5 h-3.5 fill-current" />
           <span>Subham's Mac</span>
         </button>
 
