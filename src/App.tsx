@@ -17,6 +17,7 @@ import { MessagesApp } from './components/apps/MessagesApp';
 import { ResumeViewerApp } from './components/apps/ResumeViewerApp';
 import { AppWindow, Liker } from './types';
 import { fetchLikes, signupLike, loginLike, toggleLike, getStoredUserLike, setStoredUserLike } from './api/client';
+import { ArrowLeft } from 'lucide-react';
 
 const INITIAL_WINDOWS: AppWindow[] = [
   {
@@ -141,6 +142,11 @@ export const App: React.FC = () => {
   const [isHeartModalOpen, setIsHeartModalOpen] = useState<boolean>(false);
   const [highestZIndex, setHighestZIndex] = useState<number>(25);
 
+  const [isMobileScreen, setIsMobileScreen] = useState<boolean>(false);
+  const [mobileTab, setMobileTab] = useState<{ type: 'whoami' | 'project' | 'resume'; projectId?: string }>({
+    type: 'whoami',
+  });
+
   const [wallpaper, setWallpaper] = useState<string>(() => {
     const saved = localStorage.getItem('portfolio_desktop_wallpaper');
     if (saved && (saved.includes('spiderman') || saved.includes('f1_wallpaper') || saved.includes('interstellar') || saved.includes('lunar') || saved.includes('dandelion') || saved.includes('pexels') || saved.includes('36307') || saved.includes('4545909'))) {
@@ -149,6 +155,15 @@ export const App: React.FC = () => {
     }
     return saved || 'default';
   });
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobileScreen(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleSetWallpaper = (wallpaperPath: string) => {
     setWallpaper(wallpaperPath);
@@ -189,6 +204,17 @@ export const App: React.FC = () => {
   };
 
   const openApp = (appId: string, extraProps?: Record<string, any>) => {
+    if (isMobileScreen) {
+      if (appId === 'project') {
+        setMobileTab({ type: 'project', projectId: extraProps?.projectId || 'payflow' });
+      } else if (appId === 'resume_viewer') {
+        setMobileTab({ type: 'resume' });
+      } else {
+        setMobileTab({ type: 'whoami' });
+      }
+      return;
+    }
+
     setActiveAppId(appId);
     setWindows(prev => {
       const existingIndex = prev.findIndex(w => w.id === appId);
@@ -290,6 +316,67 @@ export const App: React.FC = () => {
     return 'Subham\'s Mac';
   };
 
+  // --- 📱 DEDICATED PHONE / SMALL SCREEN MOBILE VIEW ---
+  if (isMobileScreen) {
+    return (
+      <div className="w-screen h-screen overflow-hidden bg-[#E5D8F0] font-serif select-text flex flex-col">
+        {/* Mobile Header Bar */}
+        <div className="h-12 bg-stone-950 text-white border-b-2 border-stone-950 flex items-center justify-between px-4 text-xs font-serif shrink-0 z-50 shadow-md">
+          <button
+            onClick={() => setMobileTab({ type: 'whoami' })}
+            className="font-bold text-sm tracking-widest uppercase flex items-center space-x-2 text-white cursor-pointer"
+          >
+            <span>SUBHAM DAS</span>
+          </button>
+
+          <div className="flex items-center space-x-3">
+            {mobileTab.type !== 'whoami' && (
+              <button
+                onClick={() => setMobileTab({ type: 'whoami' })}
+                className="px-3 py-1.5 rounded bg-white/10 hover:bg-white/20 text-white text-[11px] font-sans font-bold uppercase tracking-wider inline-flex items-center space-x-1 border border-white/20 cursor-pointer"
+              >
+                <ArrowLeft size={12} />
+                <span>Back</span>
+              </button>
+            )}
+            <a
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=subhamdas5477@gmail.com"
+              target="_blank"
+              rel="noreferrer"
+              className="px-3 py-1.5 rounded bg-stone-100 text-stone-950 text-[11px] font-sans font-bold uppercase tracking-wider cursor-pointer shadow-xs"
+            >
+              Contact
+            </a>
+          </div>
+        </div>
+
+        {/* Mobile Main Body Area */}
+        <div className="flex-1 overflow-hidden">
+          {mobileTab.type === 'whoami' && (
+            <WhoAmIApp
+              onOpenApp={openApp}
+            />
+          )}
+
+          {mobileTab.type === 'project' && (
+            <ProjectApp
+              projectId={mobileTab.projectId || 'payflow'}
+              onOpenApp={openApp}
+              onBack={() => setMobileTab({ type: 'whoami' })}
+            />
+          )}
+
+          {mobileTab.type === 'resume' && (
+            <ResumeViewerApp
+              onBack={() => setMobileTab({ type: 'whoami' })}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  // --- 💻 FULL DESKTOP MACOS ENVIRONMENT ---
   return (
     <div className="relative w-screen h-screen overflow-hidden bg-[#1A1A1A] font-sans antialiased select-none">
       {/* Top macOS Header */}

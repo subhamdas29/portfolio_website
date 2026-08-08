@@ -1,39 +1,53 @@
 import React, { useState } from 'react';
 import { projectsData } from '../../data/projectsData';
 import { Project } from '../../types';
-import { Github, ExternalLink, Code2, CheckCircle2, ShieldCheck, GitFork, Server, Database, Sparkles } from 'lucide-react';
+import { Github, ExternalLink, Code2, CheckCircle2, ShieldCheck, GitFork, Server, Database, Sparkles, ArrowLeft } from 'lucide-react';
 
 interface ProjectAppProps {
   projectId?: string;
   onOpenApp?: (appId: string, extraProps?: Record<string, any>) => void;
+  onBack?: () => void;
 }
 
-export const ProjectApp: React.FC<ProjectAppProps> = ({ projectId = 'payflow' }) => {
+export const ProjectApp: React.FC<ProjectAppProps> = ({ projectId = 'payflow', onBack }) => {
   const [selectedProjectId, setSelectedProjectId] = useState<string>(projectId);
 
   const project: Project = projectsData.find(p => p.id === selectedProjectId) || projectsData[0];
 
   return (
-    <div className="h-full overflow-y-auto custom-scrollbar bg-[#E5D8F0] text-stone-950 font-serif p-6 sm:p-12 space-y-10 select-text">
-      {/* Editorial Header Box (Classic Ally Doederlein Style) */}
-      <div className="border-4 border-stone-950 bg-stone-950 text-white p-6 sm:p-8 text-center shadow-xl">
-        <h1 className="text-3xl sm:text-5xl font-serif font-bold tracking-widest uppercase">
+    <div className="h-full overflow-y-auto custom-scrollbar bg-[#E5D8F0] text-stone-950 font-serif p-4 sm:p-12 space-y-6 sm:space-y-10 select-text">
+      {/* Mobile Back Button (If rendered in Mobile View) */}
+      {onBack && (
+        <div className="flex items-center justify-between pb-1">
+          <button
+            onClick={onBack}
+            className="px-4 py-2 bg-stone-950 hover:bg-stone-800 text-white text-xs font-sans font-bold uppercase tracking-wider transition-all shadow-md inline-flex items-center space-x-2 cursor-pointer"
+          >
+            <ArrowLeft size={14} />
+            <span>Back to Profile</span>
+          </button>
+        </div>
+      )}
+
+      {/* Editorial Header Box */}
+      <div className="border-4 border-stone-950 bg-stone-950 text-white p-4 sm:p-8 text-center shadow-xl">
+        <h1 className="text-2xl sm:text-5xl font-serif font-bold tracking-widest uppercase">
           PROJECT ARCHITECTURES
         </h1>
-        <p className="text-xs sm:text-sm font-sans tracking-wider text-stone-300 uppercase mt-2">
+        <p className="text-[10px] sm:text-sm font-sans tracking-wider text-stone-300 uppercase mt-1 sm:mt-2">
           Comprehensive Technical Specifications, System Workflows & API References
         </p>
       </div>
 
-      {/* Project Selector Tabs (Classic Black & White Serif Buttons) */}
-      <div className="flex items-center justify-center gap-3 flex-wrap">
+      {/* Project Selector Tabs */}
+      <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
         {projectsData.map((p) => {
           const isSelected = p.id === project.id;
           return (
             <button
               key={p.id}
               onClick={() => setSelectedProjectId(p.id)}
-              className={`px-6 py-3 text-xs font-serif font-bold uppercase tracking-widest transition-all cursor-pointer shadow-md ${
+              className={`px-3 sm:px-6 py-2 sm:py-3 text-[11px] sm:text-xs font-serif font-bold uppercase tracking-widest transition-all cursor-pointer shadow-md ${
                 isSelected
                   ? 'bg-stone-950 text-white border-2 border-stone-950'
                   : 'bg-white text-stone-950 border-2 border-stone-950 hover:bg-stone-100'
@@ -46,7 +60,7 @@ export const ProjectApp: React.FC<ProjectAppProps> = ({ projectId = 'payflow' })
       </div>
 
       {/* Main Selected Project Editorial Card */}
-      <div className="border-4 border-stone-950 bg-white p-6 sm:p-10 space-y-10 shadow-2xl">
+      <div className="border-4 border-stone-950 bg-white p-4 sm:p-10 space-y-6 sm:space-y-10 shadow-2xl">
         {/* Project Header Row */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b-2 border-stone-950 pb-6">
           <div className="space-y-2">
@@ -61,7 +75,7 @@ export const ProjectApp: React.FC<ProjectAppProps> = ({ projectId = 'payflow' })
             </p>
           </div>
 
-          {/* Action Link Buttons (GitHub Source Only) */}
+          {/* Action Link Buttons */}
           <div className="flex items-center space-x-3 shrink-0">
             {project.githubUrl && (
               <a
@@ -221,7 +235,7 @@ export const ProjectApp: React.FC<ProjectAppProps> = ({ projectId = 'payflow' })
           </div>
         )}
 
-        {/* 7. Extra Features / Game Mechanics */}
+        {/* 7. Extra Features */}
         {project.extraFeatures && (
           <div className="space-y-4 pt-4 border-t-2 border-stone-950">
             <h3 className="text-xl font-serif font-bold uppercase tracking-wider text-stone-950 flex items-center space-x-2">
