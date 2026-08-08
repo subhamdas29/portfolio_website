@@ -24,7 +24,7 @@ export const TopBar: React.FC<TopBarProps> = ({
   const timeStr = `${dayName}, ${monthName} ${dateNum} ${hours}:${minutes} ${ampm}`;
 
   const handleContactClick = () => {
-    window.open('https://mail.google.com/mail/?view=cm&fs=1&to=subhamdas290804@gmail.com', '_blank');
+    window.open('https://mail.google.com/mail/?view=cm&fs=1&to=subhamdas5477@gmail.com', '_blank');
   };
 
   return (
@@ -65,25 +65,25 @@ export const TopBar: React.FC<TopBarProps> = ({
         >
           Help
         </button>
+      </div>
 
+      {/* Right Side: About me, Contact & Live Date & Time */}
+      <div className="flex items-center space-x-1 sm:space-x-2 text-xs">
         <button 
           onClick={() => onOpenApp('whoami')}
-          className="px-2 py-0.5 rounded text-stone-300 hover:text-white hover:bg-white/10 transition-colors font-medium cursor-pointer"
+          className="px-2 py-0.5 rounded text-stone-300 hover:text-white hover:bg-white/10 transition-colors font-sans font-medium cursor-pointer"
         >
           About me
         </button>
 
         <button 
           onClick={handleContactClick}
-          className="px-2 py-0.5 rounded text-stone-300 hover:text-white hover:bg-white/10 transition-colors font-medium cursor-pointer"
+          className="px-2 py-0.5 rounded text-stone-300 hover:text-white hover:bg-white/10 transition-colors font-sans font-medium cursor-pointer"
         >
           Contact
         </button>
-      </div>
 
-      {/* Right Live Date & Time */}
-      <div className="flex items-center space-x-3 text-xs font-mono">
-        <span className="text-stone-300 text-[11px] font-sans font-medium">{timeStr}</span>
+        <span className="text-stone-300 text-[11px] font-mono font-medium pl-1.5">{timeStr}</span>
       </div>
     </header>
   );

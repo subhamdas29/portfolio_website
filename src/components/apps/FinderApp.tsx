@@ -117,7 +117,7 @@ export const FinderApp: React.FC<FinderAppProps> = ({ onOpenApp }) => {
 
   const handleItemDoubleClick = (item: FinderItem) => {
     if (item.kind === 'resume') {
-      onOpenApp('whoami');
+      onOpenApp('resume_viewer');
     } else if (item.kind === 'projects_md') {
       onOpenApp('project');
     } else if (item.kind === 'project' && item.projectId) {
@@ -125,7 +125,7 @@ export const FinderApp: React.FC<FinderAppProps> = ({ onOpenApp }) => {
     } else if (item.name === 'Applications' || item.name === 'Library' || item.name === 'System') {
       onOpenApp('project');
     } else if (item.name === 'Contacts') {
-      onOpenApp('whoami');
+      window.open('https://mail.google.com/mail/?view=cm&fs=1&to=subhamdas5477@gmail.com', '_blank');
     }
   };
 
